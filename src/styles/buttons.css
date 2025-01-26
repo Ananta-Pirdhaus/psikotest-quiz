@@ -1,0 +1,12 @@
+.btn-primary {
+    @apply mt-4 h-[34px] text-center border-solid border-[1px] border-deep-blue py-0 px-4 
+           bg-white min-w-[108px] font-semibold tracking-[.03em] inline-flex items-center 
+           text-deep-blue bg-transparent transition ease-in-out duration-300 
+           hover:bg-deep-blue hover:text-white;
+}
+
+.btn-secondary {
+    @apply mt-4 h-[34px] text-center border-solid border-[1px] border-sky-blue py-0 px-4 
+           bg-transparent min-w-[108px] font-semibold tracking-[.03em] inline-flex items-center 
+           text-sky-blue transition ease-in-out duration-300 hover:bg-sky-blue hover:text-white;
+}
