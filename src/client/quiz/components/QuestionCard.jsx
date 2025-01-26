@@ -141,29 +141,28 @@ const QuestionCard = ({
             ))}
 
             <div className="flex justify-center p-4">
+              {/* Tombol Sebelumnya */}
               <button
                 onClick={handlePrevQuestion}
                 className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mr-6 mb-2"
               >
                 <FontAwesomeIcon icon={faAnglesLeft} /> Sebelumnya
               </button>
-              <button
-                onClick={handleNextQuestion}
-                className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mb-2"
-              >
-                Selanjutnya <FontAwesomeIcon icon={faAnglesRight} />
-              </button>
-              {quizType === "Single" && (
+
+              {/* Render tombol sesuai kondisi */}
+              {quizType === "Single" && isLastQuestionAnswered ? (
                 <button
                   onClick={handleSwitchQuizType}
-                  disabled={!isLastQuestionAnswered}
-                  className={`${
-                    !isLastQuestionAnswered
-                      ? "bg-gray-300 cursor-not-allowed"
-                      : "bg-blue-500 hover:bg-blue-600"
-                  } text-white font-medium rounded-md text-md px-5 py-2.5 mb-2`}
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md text-md px-5 py-2.5 mb-2"
                 >
                   Switch to {quizType === "Single" ? "Multiple" : "Single"} Type
+                </button>
+              ) : (
+                <button
+                  onClick={handleNextQuestion}
+                  className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mb-2"
+                >
+                  Selanjutnya <FontAwesomeIcon icon={faAnglesRight} />
                 </button>
               )}
             </div>
