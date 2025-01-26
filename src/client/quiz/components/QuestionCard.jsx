@@ -13,8 +13,6 @@ const QuestionCard = ({
   handleAnswerOptionClick,
   handleNextQuestion,
   handlePrevQuestion,
-  handleScoreQuiz,
-  handleClearAnswers,
   currentQuestionNumber,
   totalQuestions,
   IdSession,
@@ -168,29 +166,27 @@ const QuestionCard = ({
             </div>
           </div>
         </div>
+
         <div className="flex justify-center pt-4">
-          <button
-            onClick={handleSubmitAnswers}
-            className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-7 py-2.5 mr-6 mb-2"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Submitting..." : "Submit All Answers"}
-          </button>
-          <button
-            onClick={handleClearAnswers}
-            className="text-white bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-orange-300 font-medium rounded-full text-sm px-5 py-2.5 mb-2"
-          >
-            Clear My Answers
-          </button>
+          {quizType === "Multiple" && isLastQuestionAnswered && (
+            <button
+              onClick={handleSubmitAnswers}
+              className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-7 py-2.5 mr-6 mb-2"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit All Answers"}
+            </button>
+          )}
         </div>
+
+        <SaveJawaban
+          selectedAnswer={selectedAnswerIDs}
+          IdSession={IdSession}
+          questionId={question.id}
+          BASE_URL={BASE_URL}
+          isSubmitting={isSubmitting} // Status pengiriman diteruskan ke SaveJawaban
+        />
       </div>
-      <SaveJawaban
-        selectedAnswer={selectedAnswerIDs}
-        IdSession={IdSession}
-        questionId={question.id}
-        BASE_URL={BASE_URL}
-        isSubmitting={isSubmitting} // Status pengiriman diteruskan ke SaveJawaban
-      />
     </div>
   );
 };
