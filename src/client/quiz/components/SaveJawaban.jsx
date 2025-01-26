@@ -9,6 +9,7 @@ const SaveJawaban = ({
   questionId,
   BASE_URL,
   isSubmitting,
+  quizType,
 }) => {
   useEffect(() => {
     if (isSubmitting) {
@@ -84,18 +85,27 @@ const SaveJawaban = ({
   const sendAnswerToServer = (options) => {
     if (!validateData(options, IdSession, questionId)) return;
 
+    // Enforce exactly 3 answers for multiple-choice questions
+    if (quizType === "multiple" && options.length !== 3) {
+      toast.error("You must select exactly 3 answers for this question.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     const bodyReq = {
       session: IdSession,
       answer: {
-        question: questionId,
-        option: options,
+        question: questionId, // Ensure it's the current question ID
+        option: options, // Only the options for the current question
       },
     };
 
-    console.log(
-      "Sending POST request with body:",
-      JSON.stringify(bodyReq, null, 2)
-    );
+    // console.log(
+    //   "Sending POST request with body:",
+    //   JSON.stringify(bodyReq, null, 2)
+    // );
 
     axios
       .post(`${BASE_URL}jawaban`, bodyReq)
@@ -120,7 +130,7 @@ const SaveJawaban = ({
             "Pertanyaan sudah ada sebelumnya."
           )
         ) {
-          updateAnswerToServer(options); // Update jika jawaban sudah ada
+          updateAnswerToServer(options); // Update if the answer already exists
         } else {
           toast.error("Error submitting your answer!", {
             position: "top-center",
@@ -133,18 +143,19 @@ const SaveJawaban = ({
   const updateAnswerToServer = (options) => {
     if (!validateData(options, IdSession, questionId)) return;
 
+    // Make sure the new answer options are relevant to the current question
     const bodyReq = {
       session: IdSession,
       answer: {
-        question: questionId,
-        option: options,
+        question: questionId, // Ensure it's the current question ID
+        option: options, // Only the options for the current question
       },
     };
 
-    console.log(
-      "Sending PUT request with body:",
-      JSON.stringify(bodyReq, null, 2)
-    );
+    // console.log(
+    //   "Sending PUT request with body:",
+    //   JSON.stringify(bodyReq, null, 2)
+    // );
 
     axios
       .put(`${BASE_URL}jawaban`, bodyReq)

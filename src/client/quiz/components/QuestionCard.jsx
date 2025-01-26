@@ -21,7 +21,7 @@ const QuestionCard = ({
   handleChangeQuizType,
   isLastQuestionAnswered,
 }) => {
-  console.log("handleChangeQuizType:", isLastQuestionAnswered);
+  // console.log("handleChangeQuizType:", isLastQuestionAnswered);
 
   const [selectedAnswerIDs, setSelectedAnswerIDs] = useState(
     selectedAnswers ?? (question.type === "Multiple" ? [] : null)
@@ -185,6 +185,7 @@ const QuestionCard = ({
           questionId={question.id}
           BASE_URL={BASE_URL}
           isSubmitting={isSubmitting} // Status pengiriman diteruskan ke SaveJawaban
+          quizType={quizType}
         />
       </div>
     </div>

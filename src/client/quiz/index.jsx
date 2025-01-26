@@ -6,7 +6,7 @@ import ScoreReportCard from "./components/ScoreReportCard";
 import ProgressCard from "./components/ProgressCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
@@ -26,6 +26,7 @@ const fetchQuestionsData = async (sessionId, quizType, page) => {
 
 export default function App() {
   const { sessionId } = useParams();
+  const navigate = useNavigate(); // Added navigate hook
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswerID, setSelectedAnswerID] = useState(null);
@@ -46,30 +47,43 @@ export default function App() {
   useEffect(() => {
     if (sessionId) {
       const initializeQuestions = async () => {
-        const { questions: fetchedQuestions, pagination: fetchedPagination } =
-          await fetchQuestionsData(
-            sessionId,
-            quizType,
-            pagination.current_page
-          );
+        try {
+          const { questions: fetchedQuestions, pagination: fetchedPagination } =
+            await fetchQuestionsData(
+              sessionId,
+              quizType,
+              pagination.current_page
+            );
 
-        if (
-          quizType === "Single" &&
-          fetchedQuestions.every((q) => q.answers.length > 0)
-        ) {
-          setQuizType("Multiple");
-          toast.info(
-            "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
-          );
+          if (fetchedQuestions.length === 0) {
+            toast.error(
+              "Session ID tidak valid. Mengarahkan ke halaman peserta."
+            );
+            navigate("/peserta"); // Redirect to /peserta if sessionId is invalid
+            return;
+          }
+
+          if (
+            quizType === "Single" &&
+            fetchedQuestions.every((q) => q.answers.length > 0)
+          ) {
+            setQuizType("Multiple");
+            toast.info(
+              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
+            );
+          }
+          setQuestions(fetchedQuestions);
+          setPagination(fetchedPagination);
+          setLoading(false);
+        } catch (error) {
+          setError("Gagal memuat data soal.");
+          setLoading(false);
         }
-        setQuestions(fetchedQuestions);
-        setPagination(fetchedPagination);
-        setLoading(false);
       };
 
       initializeQuestions();
     }
-  }, [sessionId, quizType, pagination.current_page]);
+  }, [sessionId, quizType, pagination.current_page, navigate]);
 
   useEffect(() => {
     setCurrentQuestionNumber(currentQuestion + 1);
@@ -148,6 +162,15 @@ export default function App() {
 
   const handleChangeQuizType = () => {
     setQuizType(quizType === "Single" ? "Multiple" : "Single");
+    // Reset pagination to start from page 1 when quiz type changes
+    setPagination({
+      current_page: 1,
+      last_page: 1,
+      per_page: 1,
+      total: 1,
+    });
+    setCurrentQuestion(0); // Reset to the first question
+    setSelectedAnswerID(null); // Clear the selected answer
   };
 
   if (loading) {
