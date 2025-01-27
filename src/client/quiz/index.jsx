@@ -43,6 +43,7 @@ export default function App() {
   });
   const [quizType, setQuizType] = useState("Single");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
+  const [previousQuestionId, setPreviousQuestionId] = useState(null);
 
   useEffect(() => {
     if (sessionId) {

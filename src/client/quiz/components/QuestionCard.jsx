@@ -21,17 +21,22 @@ const QuestionCard = ({
   handleChangeQuizType,
   isLastQuestionAnswered,
 }) => {
-  // console.log("handleChangeQuizType:", isLastQuestionAnswered);
-
   const [selectedAnswerIDs, setSelectedAnswerIDs] = useState(
     selectedAnswers ?? (question.type === "Multiple" ? [] : null)
   );
-
-  const [isSubmitting, setIsSubmitting] = useState(false); // State untuk melacak proses submit
+  const [isSubmitting, setIsSubmitting] = useState(false); // State for tracking submission
+  const [currentQuestionId, setCurrentQuestionId] = useState(question.id);
 
   useEffect(() => {
     setSelectedAnswerIDs(selectedAnswers);
   }, [selectedAnswers]);
+
+  useEffect(() => {
+    if (question.type === "Multiple" && question.id !== currentQuestionId) {
+      setSelectedAnswerIDs([]); // Reset selected answers for Multiple type
+    }
+    setCurrentQuestionId(question.id); // Update the current question id
+  }, [question.id, currentQuestionId, question.type]);
 
   const handleAnswerClick = (id) => {
     const isMultiple = question.type === "Multiple";
@@ -56,13 +61,10 @@ const QuestionCard = ({
   };
 
   const handleSubmitAnswers = () => {
-    // Mulai proses submit
     setIsSubmitting(true);
-
-    // Proses ini akan diteruskan ke komponen SaveJawaban
     setTimeout(() => {
-      setIsSubmitting(false); // Setelah pengiriman selesai
-    }, 2000); // Simulasi waktu pengiriman
+      setIsSubmitting(false); // After submission
+    }, 2000); // Simulating submission time
   };
 
   const progressPercentage =
@@ -139,7 +141,7 @@ const QuestionCard = ({
             ))}
 
             <div className="flex justify-center p-4">
-              {/* Tombol Sebelumnya */}
+              {/* Previous Button */}
               <button
                 onClick={handlePrevQuestion}
                 className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mr-6 mb-2"
@@ -147,7 +149,7 @@ const QuestionCard = ({
                 <FontAwesomeIcon icon={faAnglesLeft} /> Sebelumnya
               </button>
 
-              {/* Render tombol sesuai kondisi */}
+              {/* Render button based on conditions */}
               {quizType === "Single" && isLastQuestionAnswered ? (
                 <button
                   onClick={handleSwitchQuizType}
@@ -184,7 +186,7 @@ const QuestionCard = ({
           IdSession={IdSession}
           questionId={question.id}
           BASE_URL={BASE_URL}
-          isSubmitting={isSubmitting} // Status pengiriman diteruskan ke SaveJawaban
+          isSubmitting={isSubmitting}
           quizType={quizType}
         />
       </div>

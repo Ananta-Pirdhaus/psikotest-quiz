@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const SaveJawaban = ({
   selectedAnswer,
@@ -11,6 +12,8 @@ const SaveJawaban = ({
   isSubmitting,
   quizType,
 }) => {
+  const navigate = useNavigate();
+  console.log("selectedAnswer: ", selectedAnswer);
   useEffect(() => {
     if (isSubmitting) {
       // Kirimkan semua jawaban hanya jika isSubmitting bernilai true
@@ -59,6 +62,8 @@ const SaveJawaban = ({
         position: "top-center",
         autoClose: 3000,
       });
+
+      navigate(`/survey/${IdSession}`);
     } catch (error) {
       console.error("Error submitting answers:", error);
 

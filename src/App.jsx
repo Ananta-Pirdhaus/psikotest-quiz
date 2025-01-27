@@ -3,12 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./scroll-to-top";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-
 // Lazy load pages
 const HomePage = lazy(() => import("./client/main/pages/main"));
 const TestPage = lazy(() => import("./client/quiz/pages/test"));
 const LoginPage = lazy(() => import("./client/auth/login"));
 const UserPage = lazy(() => import("./client/users/index"));
+const SurveyPage = lazy(() => import("./client/survei/index"));
+const FinishQuizPage = lazy(() => import("./client/quiz/pages/finishTest"));
 
 export default function App() {
   return (
@@ -19,6 +20,8 @@ export default function App() {
         <Route path="/test/:sessionId" element={<TestPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/peserta" element={<UserPage />} />
+        <Route path="/finish-quiz" element={<FinishQuizPage />} />
+        <Route path="/survey/:sessionId" element={<SurveyPage />} />
       </Routes>
     </Router>
   );
