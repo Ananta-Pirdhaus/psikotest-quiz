@@ -96,7 +96,15 @@ export default function App() {
   };
 
   const handleNextQuestion = async () => {
-    if (selectedAnswerID === null) {
+    if (quizType === "Multiple" && selectedAnswerID.length !== 3) {
+      toast.error("Tolong pilih tepat 3 jawaban.");
+      return;
+    }
+
+    if (
+      selectedAnswerID === null ||
+      (quizType !== "Multiple" && selectedAnswerID.length === 0)
+    ) {
       toast.error(
         "Tolong Jawab Pertanyaan dalam soal berikut terlebih dahulu!"
       );

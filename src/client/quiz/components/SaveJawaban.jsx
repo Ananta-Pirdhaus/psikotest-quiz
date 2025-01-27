@@ -13,14 +13,28 @@ const SaveJawaban = ({
   quizType,
 }) => {
   const navigate = useNavigate();
-  console.log("selectedAnswer: ", selectedAnswer);
+  let storedAnswers = []; // Variabel untuk menyimpan jawaban sementara
+
   useEffect(() => {
     if (isSubmitting) {
       // Kirimkan semua jawaban hanya jika isSubmitting bernilai true
       submitAllAnswers(IdSession, selectedAnswer);
     } else if (selectedAnswer) {
       if (Array.isArray(selectedAnswer) && selectedAnswer.length > 0) {
-        sendAnswerToServer(selectedAnswer); // Multiple options
+        // Menyimpan jawaban untuk Multiple
+        storedAnswers = selectedAnswer;
+
+        // Cek jika quizType adalah 'multiple', baru periksa jumlah jawaban
+        if (quizType === "multiple" && storedAnswers.length === 3) {
+          sendAnswerToServer(storedAnswers); // Kirim jawaban jika sudah 3
+        } else if (quizType === "multiple") {
+          toast.error("You must select exactly 3 answers for this question.", {
+            position: "top-center",
+            autoClose: 3000,
+          });
+        } else {
+          sendAnswerToServer(storedAnswers); // Untuk Single atau tipe lain, langsung kirim jawaban
+        }
       } else if (typeof selectedAnswer === "string") {
         sendAnswerToServer([selectedAnswer]); // Single option converted to array
       }
@@ -41,15 +55,11 @@ const SaveJawaban = ({
       answers,
     };
 
-    console.log("Submitting all answers with body:", bodyReq);
-
     try {
       const response = await axios.get(
         `${BASE_URL}jawaban/save/${IdSession}`,
         bodyReq
       );
-      console.log("Submission response:", response.data);
-
       if (response.data?.status === "error") {
         toast.error(response.data?.message || "Submission failed!", {
           position: "top-center",
@@ -62,35 +72,19 @@ const SaveJawaban = ({
         position: "top-center",
         autoClose: 3000,
       });
-
       navigate(`/survey/${IdSession}`);
     } catch (error) {
-      console.error("Error submitting answers:", error);
-
-      const errorMessage =
-        error.response?.data?.message ||
-        "Failed to submit answers. Please try again.";
-      toast.error(errorMessage, {
+      toast.error("Failed to submit answers. Please try again.", {
         position: "top-center",
         autoClose: 3000,
       });
-
-      if (
-        error.response?.data?.status === "error" &&
-        error.response?.data?.message === "Sesi anda telah berakhir."
-      ) {
-        toast.error("Session expired. Please log in again.", {
-          position: "top-center",
-          autoClose: 3000,
-        });
-      }
     }
   };
 
   const sendAnswerToServer = (options) => {
     if (!validateData(options, IdSession, questionId)) return;
 
-    // Enforce exactly 3 answers for multiple-choice questions
+    // Untuk tipe "multiple", pastikan jawaban terdiri dari 3 pilihan
     if (quizType === "multiple" && options.length !== 3) {
       toast.error("You must select exactly 3 answers for this question.", {
         position: "top-center",
@@ -102,15 +96,10 @@ const SaveJawaban = ({
     const bodyReq = {
       session: IdSession,
       answer: {
-        question: questionId, // Ensure it's the current question ID
-        option: options, // Only the options for the current question
+        question: questionId,
+        option: options,
       },
     };
-
-    // console.log(
-    //   "Sending POST request with body:",
-    //   JSON.stringify(bodyReq, null, 2)
-    // );
 
     axios
       .post(`${BASE_URL}jawaban`, bodyReq)
@@ -136,31 +125,18 @@ const SaveJawaban = ({
           )
         ) {
           updateAnswerToServer(options); // Update if the answer already exists
-        } else {
-          toast.error("Error submitting your answer!", {
-            position: "top-center",
-            autoClose: 3000,
-          });
         }
       });
   };
 
   const updateAnswerToServer = (options) => {
-    if (!validateData(options, IdSession, questionId)) return;
-
-    // Make sure the new answer options are relevant to the current question
     const bodyReq = {
       session: IdSession,
       answer: {
-        question: questionId, // Ensure it's the current question ID
-        option: options, // Only the options for the current question
+        question: questionId,
+        option: options,
       },
     };
-
-    // console.log(
-    //   "Sending PUT request with body:",
-    //   JSON.stringify(bodyReq, null, 2)
-    // );
 
     axios
       .put(`${BASE_URL}jawaban`, bodyReq)
@@ -180,7 +156,6 @@ const SaveJawaban = ({
 
   const validateData = (options, IdSession, questionId) => {
     if (!IdSession || typeof IdSession !== "string") {
-      console.error("Invalid session ID:", IdSession);
       toast.error("Invalid session ID.", {
         position: "top-center",
         autoClose: 3000,
@@ -189,7 +164,6 @@ const SaveJawaban = ({
     }
 
     if (!questionId || typeof questionId !== "string") {
-      console.error("Invalid question ID:", questionId);
       toast.error("Invalid question ID.", {
         position: "top-center",
         autoClose: 3000,
@@ -198,7 +172,6 @@ const SaveJawaban = ({
     }
 
     if (!options || !Array.isArray(options) || options.length === 0) {
-      console.error("Invalid options:", options);
       toast.error("Invalid options selected.", {
         position: "top-center",
         autoClose: 3000,
