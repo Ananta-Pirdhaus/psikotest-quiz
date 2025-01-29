@@ -20,7 +20,10 @@ const QuestionCard = ({
   quizType,
   handleChangeQuizType,
   isLastQuestionAnswered,
+  currentPage,
 }) => {
+  console.log("currentQuestionNumber", currentPage);
+  console.log("totalQuestions", totalQuestions);
   const [selectedAnswerIDs, setSelectedAnswerIDs] = useState(
     selectedAnswers ?? (question.type === "Multiple" ? [] : null)
   );
@@ -68,9 +71,7 @@ const QuestionCard = ({
   };
 
   const progressPercentage =
-    totalQuestions > 1
-      ? ((currentQuestionNumber - 1) / (totalQuestions - 1)) * 100
-      : 0;
+    totalQuestions > 1 ? ((currentPage - 1) / (totalQuestions - 1)) * 100 : 0;
 
   const handleSwitchQuizType = () => {
     if (isLastQuestionAnswered) {
@@ -115,7 +116,7 @@ const QuestionCard = ({
               </div>
             </div>
             <h2 className="text-xl font-bold leading-none text-gray-900 mt-4">
-              Question {currentQuestionNumber} of {totalQuestions}
+              Question {currentPage} of {totalQuestions}
             </h2>
           </div>
         </div>

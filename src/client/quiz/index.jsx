@@ -44,6 +44,11 @@ export default function App() {
   const [quizType, setQuizType] = useState("Single");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [previousQuestionId, setPreviousQuestionId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    localStorage.setItem("checkpointPage", currentPage);
+  }, [currentPage]);
 
   useEffect(() => {
     if (sessionId) {
@@ -64,17 +69,25 @@ export default function App() {
             return;
           }
 
-          if (
+          // Cek apakah ini soal terakhir pada tipe Single
+          const isLastQuestionSingle =
             quizType === "Single" &&
-            fetchedQuestions.every((q) => q.answers.length > 0)
-          ) {
+            fetchedPagination.current_page === fetchedPagination.total_pages;
+
+          const lastQuestionAnswered =
+            isLastQuestionSingle &&
+            fetchedQuestions[fetchedQuestions.length - 1].answers.length > 0;
+
+          if (lastQuestionAnswered) {
             setQuizType("Multiple");
             toast.info(
-              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
+              "Tipe kuis diubah menjadi Multiple karena soal terakhir telah dijawab!"
             );
           }
+
           setQuestions(fetchedQuestions);
           setPagination(fetchedPagination);
+          setCurrentPage(fetchedPagination.current_page);
           setLoading(false);
         } catch (error) {
           setError("Gagal memuat data soal.");
@@ -123,6 +136,7 @@ export default function App() {
       setQuestions(fetchedQuestions);
       setPagination(fetchedPagination);
       setCurrentQuestion(0);
+      setCurrentPage(nextPage);
     }
   };
 
@@ -138,6 +152,7 @@ export default function App() {
 
       setQuestions(fetchedQuestions);
       setPagination(fetchedPagination);
+      setCurrentPage(prevPage);
       setCurrentQuestion(fetchedQuestions.length - 1);
     }
   };
@@ -246,6 +261,7 @@ export default function App() {
               quizType={quizType}
               handleChangeQuizType={handleChangeQuizType}
               isLastQuestionAnswered={isLastQuestionAnswered}
+              currentPage={currentPage}
             />
           )}
         </div>
