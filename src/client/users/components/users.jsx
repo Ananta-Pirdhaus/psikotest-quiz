@@ -211,7 +211,7 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
                   className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   onClick={handleSubmit}
                 >
-                  <span className="ml-3">Sign Up</span>
+                  <span className="ml-3">Daftar</span>
                 </button>
               </div>
             </div>

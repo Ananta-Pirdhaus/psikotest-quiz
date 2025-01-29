@@ -10,6 +10,7 @@ const LoginPage = lazy(() => import("./client/auth/login"));
 const UserPage = lazy(() => import("./client/users/index"));
 const SurveyPage = lazy(() => import("./client/survei/index"));
 const FinishQuizPage = lazy(() => import("./client/quiz/pages/finishTest"));
+const ResultQuizPage = lazy(() => import("./client/quiz/result/index"));
 
 export default function App() {
   return (
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/peserta" element={<UserPage />} />
         <Route path="/finish-quiz" element={<FinishQuizPage />} />
         <Route path="/survey/:sessionId" element={<SurveyPage />} />
+        <Route path="/hasil-quiz/:idSession" element={<ResultQuizPage />} />
       </Routes>
     </Router>
   );

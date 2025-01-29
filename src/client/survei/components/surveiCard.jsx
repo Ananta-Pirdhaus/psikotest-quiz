@@ -95,7 +95,7 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
                   ].map((option) => (
                     <button
                       key={option}
-                      className={`w-1/4 py-2 px-4 rounded-lg text-white ${
+                      className={`w-1/4 max-w-xs py-1 px-3 rounded-lg text-white ${
                         answers[question.id].selectedAnswer === option
                           ? "bg-blue-700" // Darker color when selected
                           : "bg-blue-500 hover:bg-blue-600"

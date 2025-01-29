@@ -72,7 +72,7 @@ const SaveJawaban = ({
         position: "top-center",
         autoClose: 3000,
       });
-      navigate(`/survey/${IdSession}`);
+      navigate(`/hasil-quiz/${IdSession}`);
     } catch (error) {
       toast.error("Failed to submit answers. Please try again.", {
         position: "top-center",
