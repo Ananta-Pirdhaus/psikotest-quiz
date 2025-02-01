@@ -69,10 +69,10 @@ export default function App() {
             return;
           }
 
-          // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
+          // // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
           if (
             quizType === "Single" &&
-            fetchedQuestions.every((q) => q.answers.length > 0)
+            fetchedQuestions.every((q) => q.answers.length === questions.length)
           ) {
             setQuizType("Multiple");
             toast.info(
@@ -184,24 +184,34 @@ export default function App() {
   };
 
   const handleChangeQuizType = () => {
-    if (pagination.current_page === pagination.last_page) {
-      // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
-      setCurrentPage(1); // Memulai dari halaman 1
+    if (
+      quizType === "Single" &&
+      questions.every((q) => q.answers.length === questions.length)
+    ) {
+      // Jika tipe kuis adalah "Single" dan setiap soal memiliki jumlah jawaban yang sesuai
+      if (pagination.current_page === pagination.last_page) {
+        // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
+        setCurrentPage(1); // Memulai dari halaman 1
+      }
+
+      // Ganti tipe kuis
+      setQuizType(quizType === "Single" ? "Multiple" : "Single");
+
+      // Reset pagination dan soal
+      setPagination({
+        current_page: 1,
+        last_page: 1,
+        per_page: 1,
+        total: 1,
+      });
+      setCurrentQuestion(0); // Reset ke soal pertama
+      setSelectedAnswerID(null); // Hapus jawaban yang terpilih
+    } else {
+      // Menambahkan aksi jika validasi gagal, misalnya memberi peringatan
+      toast.warn("Validasi gagal: Jawaban tidak sesuai dengan jumlah soal.");
     }
-
-    // Ganti tipe kuis
-    setQuizType(quizType === "Single" ? "Multiple" : "Single");
-
-    // Reset pagination dan soal
-    setPagination({
-      current_page: 1,
-      last_page: 1,
-      per_page: 1,
-      total: 1,
-    });
-    setCurrentQuestion(0); // Reset ke soal pertama
-    setSelectedAnswerID(null); // Hapus jawaban yang terpilih
   };
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-50">
