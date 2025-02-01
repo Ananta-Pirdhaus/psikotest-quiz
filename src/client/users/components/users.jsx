@@ -105,11 +105,26 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
           autoClose: 3000,
         });
 
-        // Mengambil sessionId dari response data
-        const sessionId = data.sessions[0]?.id;
+        // Mencari session yang aktif
+        const activeSession = data.sessions.find(
+          (session) => session.status === "Active"
+        );
 
-        // Menavigasi ke halaman Test dengan sessionId sebagai parameter
-        navigate(`/test/${sessionId}`);
+        if (activeSession) {
+          const { id: sessionId, type } = activeSession; // Ambil sessionId dan type
+
+          // Cek tipe sesi, jika "Survey" arahkan ke halaman survei, jika tidak ke halaman test
+          if (type === "Survey") {
+            navigate(`/survey/${sessionId}`);
+          } else {
+            navigate(`/test/${sessionId}`);
+          }
+        } else {
+          toast.error("Tidak ada sesi aktif ditemukan.", {
+            position: "top-right",
+            autoClose: 3000,
+          });
+        }
 
         console.log("Response:", response.data);
       }
@@ -122,8 +137,6 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
     }
   };
 
-
-  
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
       <ToastContainer />
@@ -230,7 +243,6 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
         </div>
       </div>
     </div>
-    
   );
 }
 

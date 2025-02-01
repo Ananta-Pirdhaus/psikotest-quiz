@@ -54,13 +54,12 @@ export default function App() {
     }
   }, [currentPage]);
 
-
   useEffect(() => {
     if (sessionId) {
       const initializeQuestions = async () => {
         try {
           const { questions: fetchedQuestions, pagination: fetchedPagination } =
-            await fetchQuestionsData(sessionId, quizType, currentPage); // Gunakan currentPage yang sudah diperbarui
+            await fetchQuestionsData(sessionId, quizType, currentPage); // Use the updated currentPage
 
           if (fetchedQuestions.length === 0) {
             toast.error(
@@ -70,6 +69,18 @@ export default function App() {
             return;
           }
 
+          // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
+          if (
+            quizType === "Single" &&
+            fetchedQuestions.every((q) => q.answers.length > 0)
+          ) {
+            setQuizType("Multiple");
+            toast.info(
+              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
+            );
+          }
+
+          // Set fetched questions and pagination
           setQuestions(fetchedQuestions);
           setPagination(fetchedPagination);
           setCurrentPage(fetchedPagination.current_page);
@@ -82,7 +93,7 @@ export default function App() {
 
       initializeQuestions();
     }
-  }, [sessionId, quizType, currentPage, navigate]);
+  }, [sessionId, quizType, currentPage]); // Ensure dependencies are properly included
 
   useEffect(() => {
     setCurrentQuestionNumber(currentQuestion + 1);
@@ -94,7 +105,10 @@ export default function App() {
   };
 
   const handleNextQuestion = async () => {
-    if (quizType === "Multiple" && selectedAnswerID.length !== 3) {
+    if (
+      quizType === "Multiple" &&
+      (!selectedAnswerID || selectedAnswerID.length !== 3)
+    ) {
       toast.error("Tolong pilih tepat 3 jawaban.");
       return;
     }
@@ -170,18 +184,24 @@ export default function App() {
   };
 
   const handleChangeQuizType = () => {
+    if (pagination.current_page === pagination.last_page) {
+      // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
+      setCurrentPage(1); // Memulai dari halaman 1
+    }
+
+    // Ganti tipe kuis
     setQuizType(quizType === "Single" ? "Multiple" : "Single");
-    // Reset pagination to start from page 1 when quiz type changes
+
+    // Reset pagination dan soal
     setPagination({
       current_page: 1,
       last_page: 1,
       per_page: 1,
       total: 1,
     });
-    setCurrentQuestion(0); // Reset to the first question
-    setSelectedAnswerID(null); // Clear the selected answer
+    setCurrentQuestion(0); // Reset ke soal pertama
+    setSelectedAnswerID(null); // Hapus jawaban yang terpilih
   };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-50">

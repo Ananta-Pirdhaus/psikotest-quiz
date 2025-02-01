@@ -13,22 +13,19 @@ const QuestionCard = ({
   handleAnswerOptionClick,
   handleNextQuestion,
   handlePrevQuestion,
-  currentQuestionNumber,
   totalQuestions,
   IdSession,
-  selectedAnswerID,
   quizType,
   handleChangeQuizType,
   isLastQuestionAnswered,
   currentPage,
 }) => {
-  console.log("currentQuestionNumber", currentPage);
-  console.log("totalQuestions", totalQuestions);
   const [selectedAnswerIDs, setSelectedAnswerIDs] = useState(
     selectedAnswers ?? (question.type === "Multiple" ? [] : null)
   );
   const [isSubmitting, setIsSubmitting] = useState(false); // State for tracking submission
   const [currentQuestionId, setCurrentQuestionId] = useState(question.id);
+  const answeredOptionIds = question.answers.map((ans) => ans.option_id);
 
   useEffect(() => {
     setSelectedAnswerIDs(selectedAnswers);
@@ -54,12 +51,12 @@ const QuestionCard = ({
         updatedAnswers = id;
       }
 
-      setSelectedAnswerIDs(updatedAnswers);
-      handleAnswerOptionClick(updatedAnswers);
+      setSelectedAnswerIDs(updatedAnswers); // Update local state
+      handleAnswerOptionClick(updatedAnswers); // Pass the updated answer back to App.js
     } else {
       updatedAnswers = [id];
       setSelectedAnswerIDs(updatedAnswers);
-      handleAnswerOptionClick(id);
+      handleAnswerOptionClick(updatedAnswers);
     }
   };
 
@@ -126,20 +123,28 @@ const QuestionCard = ({
             <p className="my-6 font-semibold text-gray-700 text-lg">
               {question.question}
             </p>
-            {question.options.map((answerOption) => (
-              <button
-                key={answerOption.id}
-                onClick={() => handleAnswerClick(answerOption.id)}
-                className={`w-full text-left font-semibold text-gray-900 ${
-                  selectedAnswerIDs?.includes(answerOption.id) ||
-                  answerOption.id === selectedAnswerID
-                    ? "bg-yellow-100 border border-yellow-400"
-                    : "border border-orange-600 hover:bg-orange-600"
-                } focus:outline-none hover:bg-yellow-200 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
-              >
-                {answerOption.answer}
-              </button>
-            ))}
+            {question.options.map((answerOption) => {
+              const isSelected =
+                selectedAnswerIDs?.includes(answerOption.id) ||
+                answeredOptionIds.includes(answerOption.id); // Cek apakah opsi ini sudah dijawab
+              const isCorrectAnswer = answeredOptionIds.includes(
+                answerOption.id
+              ); // Jika sudah dijawab, beri gaya khusus
+
+              return (
+                <button
+                  key={answerOption.id}
+                  onClick={() => handleAnswerClick(answerOption.id)}
+                  className={`w-full text-left font-semibold text-gray-900 ${
+                    isSelected || isCorrectAnswer
+                      ? "bg-yellow-100 border border-yellow-400"
+                      : "border border-orange-600 hover:bg-orange-600"
+                  } focus:outline-none hover:bg-yellow-200 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
+                >
+                  {answerOption.answer}
+                </button>
+              );
+            })}
 
             <div className="flex justify-center p-4">
               {/* Previous Button */}

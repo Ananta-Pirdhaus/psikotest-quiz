@@ -41,7 +41,10 @@ const SaveJawaban = ({
     }
   }, [isSubmitting, selectedAnswer]);
 
-  const submitAllAnswers = async (idSession, answers) => {
+  const submitAllAnswers = async (answers) => {
+    const idSession = localStorage.getItem("IdSession");
+    const checkpointPage = localStorage.getItem("checkpointPage");
+
     if (!idSession || !Array.isArray(answers) || answers.length === 0) {
       toast.error("Invalid session or answers. Please check your data.", {
         position: "top-center",
@@ -56,10 +59,10 @@ const SaveJawaban = ({
     };
 
     try {
-      const response = await axios.get(
-        `${BASE_URL}jawaban/save/${IdSession}`,
-        bodyReq
-      );
+      const response = await axios.get(`${BASE_URL}jawaban/save/${idSession}`, {
+        params: bodyReq,
+      });
+
       if (response.data?.status === "error") {
         toast.error(response.data?.message || "Submission failed!", {
           position: "top-center",
@@ -68,11 +71,15 @@ const SaveJawaban = ({
         return;
       }
 
+      // Clear localStorage after successful submission
+      localStorage.removeItem("IdSession");
+      localStorage.removeItem("checkpointPage");
+
       toast.success("All answers submitted successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
-      navigate(`/hasil-quiz/${IdSession}`);
+      navigate(`/hasil-quiz/${idSession}`);
     } catch (error) {
       toast.error("Failed to submit answers. Please try again.", {
         position: "top-center",
