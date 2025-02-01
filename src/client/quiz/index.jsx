@@ -44,45 +44,30 @@ export default function App() {
   const [quizType, setQuizType] = useState("Single");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [previousQuestionId, setPreviousQuestionId] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(localStorage.getItem("checkpointPage")) || 1
+  );
 
   useEffect(() => {
-    localStorage.setItem("checkpointPage", currentPage);
+    if (currentPage) {
+      localStorage.setItem("checkpointPage", currentPage);
+    }
   }, [currentPage]);
+
 
   useEffect(() => {
     if (sessionId) {
       const initializeQuestions = async () => {
         try {
           const { questions: fetchedQuestions, pagination: fetchedPagination } =
-            await fetchQuestionsData(
-              sessionId,
-              quizType,
-              pagination.current_page
-            );
+            await fetchQuestionsData(sessionId, quizType, currentPage); // Gunakan currentPage yang sudah diperbarui
 
           if (fetchedQuestions.length === 0) {
             toast.error(
               "Session ID tidak valid. Mengarahkan ke halaman peserta."
             );
-            navigate("/peserta"); // Redirect to /peserta if sessionId is invalid
+            navigate("/peserta");
             return;
-          }
-
-          // Cek apakah ini soal terakhir pada tipe Single
-          const isLastQuestionSingle =
-            quizType === "Single" &&
-            fetchedPagination.current_page === fetchedPagination.total_pages;
-
-          const lastQuestionAnswered =
-            isLastQuestionSingle &&
-            fetchedQuestions[fetchedQuestions.length - 1].answers.length > 0;
-
-          if (lastQuestionAnswered) {
-            setQuizType("Multiple");
-            toast.info(
-              "Tipe kuis diubah menjadi Multiple karena soal terakhir telah dijawab!"
-            );
           }
 
           setQuestions(fetchedQuestions);
@@ -97,7 +82,7 @@ export default function App() {
 
       initializeQuestions();
     }
-  }, [sessionId, quizType, pagination.current_page, navigate]);
+  }, [sessionId, quizType, currentPage, navigate]);
 
   useEffect(() => {
     setCurrentQuestionNumber(currentQuestion + 1);
