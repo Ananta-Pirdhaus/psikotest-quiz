@@ -19,7 +19,10 @@ const QuestionCard = ({
   handleChangeQuizType,
   isLastQuestionAnswered,
   currentPage,
+  isAnswered,
+  handleCorrectAnswer,
 }) => {
+  console.log("isAnswered", isAnswered);
   const [selectedAnswerIDs, setSelectedAnswerIDs] = useState(
     selectedAnswers ?? (question.type === "Multiple" ? [] : null)
   );
@@ -126,10 +129,18 @@ const QuestionCard = ({
             {question.options.map((answerOption) => {
               const isSelected =
                 selectedAnswerIDs?.includes(answerOption.id) ||
-                answeredOptionIds.includes(answerOption.id); // Cek apakah opsi ini sudah dijawab
+                answeredOptionIds.includes(answerOption.id);
+
               const isCorrectAnswer = answeredOptionIds.includes(
                 answerOption.id
-              ); // Jika sudah dijawab, beri gaya khusus
+              );
+
+              // Call handleCorrectAnswer to update parent state when the answer is correct
+              useEffect(() => {
+                if (isCorrectAnswer) {
+                  handleCorrectAnswer(true); // Update parent state to set isAnswered to true
+                }
+              }, [isCorrectAnswer, handleCorrectAnswer]);
 
               return (
                 <button

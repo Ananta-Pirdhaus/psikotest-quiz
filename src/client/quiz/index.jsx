@@ -26,13 +26,10 @@ const fetchQuestionsData = async (sessionId, quizType, page) => {
 
 export default function App() {
   const { sessionId } = useParams();
-  const navigate = useNavigate(); // Added navigate hook
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswerID, setSelectedAnswerID] = useState(null);
-  const [showScore, setShowScore] = useState(false);
-  const [showProgress, setShowProgress] = useState(false);
-  const [score, setScore] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
@@ -43,23 +40,23 @@ export default function App() {
   });
   const [quizType, setQuizType] = useState("Single");
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
-  const [previousQuestionId, setPreviousQuestionId] = useState(null);
   const [currentPage, setCurrentPage] = useState(
     parseInt(localStorage.getItem("checkpointPage")) || 1
   );
+  const [isAnswered, setIsAnswered] = useState(false); // New state to track if question is answered
 
   useEffect(() => {
     if (currentPage) {
       localStorage.setItem("checkpointPage", currentPage);
     }
-  }, [currentPage]);
+  }, [sessionId]);
 
   useEffect(() => {
     if (sessionId) {
       const initializeQuestions = async () => {
         try {
           const { questions: fetchedQuestions, pagination: fetchedPagination } =
-            await fetchQuestionsData(sessionId, quizType, currentPage); // Use the updated currentPage
+            await fetchQuestionsData(sessionId, quizType, currentPage);
 
           if (fetchedQuestions.length === 0) {
             toast.error(
@@ -69,18 +66,6 @@ export default function App() {
             return;
           }
 
-          // // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
-          if (
-            quizType === "Single" &&
-            fetchedQuestions.every((q) => q.answers.length > 0)
-          ) {
-            setQuizType("Multiple");
-            toast.info(
-              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
-            );
-          }
-
-          // Set fetched questions and pagination
           setQuestions(fetchedQuestions);
           setPagination(fetchedPagination);
           setCurrentPage(fetchedPagination.current_page);
@@ -93,7 +78,7 @@ export default function App() {
 
       initializeQuestions();
     }
-  }, [sessionId, quizType, currentPage]); // Ensure dependencies are properly included
+  }, [sessionId, quizType, currentPage]);
 
   useEffect(() => {
     setCurrentQuestionNumber(currentQuestion + 1);
@@ -102,9 +87,21 @@ export default function App() {
   const handleAnswerOptionClick = (selectedAnswerID) => {
     if (!selectedAnswerID) return;
     setSelectedAnswerID(selectedAnswerID);
+    setIsAnswered(true); // Mark question as answered
+  };
+
+  const handleCorrectAnswer = (correct) => {
+    if (correct) {
+      setIsAnswered(true); // Set `isAnswered` to true if the answer is correct
+    }
   };
 
   const handleNextQuestion = async () => {
+    if (!isAnswered) {
+      toast.error("Tolong jawab pertanyaan terlebih dahulu!");
+      return;
+    }
+
     if (
       quizType === "Multiple" &&
       (!selectedAnswerID || selectedAnswerID.length !== 3)
@@ -113,20 +110,11 @@ export default function App() {
       return;
     }
 
-    if (
-      selectedAnswerID === null ||
-      (quizType !== "Multiple" && selectedAnswerID.length === 0)
-    ) {
-      toast.error(
-        "Tolong Jawab Pertanyaan dalam soal berikut terlebih dahulu!"
-      );
-      return;
-    }
-
     const nextQuestion = currentQuestion + 1;
     if (nextQuestion < questions.length) {
       setCurrentQuestion(nextQuestion);
       setSelectedAnswerID(null);
+      setIsAnswered(false); // Reset isAnswered for the next question
     } else if (pagination.current_page < pagination.last_page) {
       const nextPage = pagination.current_page + 1;
       const { questions: fetchedQuestions, pagination: fetchedPagination } =
@@ -136,6 +124,7 @@ export default function App() {
       setPagination(fetchedPagination);
       setCurrentQuestion(0);
       setCurrentPage(nextPage);
+      setIsAnswered(false); // Reset for new page
     }
   };
 
@@ -144,6 +133,7 @@ export default function App() {
     if (prevQuestion >= 0) {
       setCurrentQuestion(prevQuestion);
       setSelectedAnswerID(null);
+      setIsAnswered(false); // Reset isAnswered when going to previous question
     } else if (pagination.current_page > 1) {
       const prevPage = pagination.current_page - 1;
       const { questions: fetchedQuestions, pagination: fetchedPagination } =
@@ -153,6 +143,7 @@ export default function App() {
       setPagination(fetchedPagination);
       setCurrentPage(prevPage);
       setCurrentQuestion(fetchedQuestions.length - 1);
+      setIsAnswered(false); // Reset for previous page
     }
   };
 
@@ -188,26 +179,19 @@ export default function App() {
       quizType === "Single" &&
       questions.every((q) => q.answers.length === questions.length)
     ) {
-      // Jika tipe kuis adalah "Single" dan setiap soal memiliki jumlah jawaban yang sesuai
       if (pagination.current_page === pagination.last_page) {
-        // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
-        setCurrentPage(1); // Memulai dari halaman 1
+        setCurrentPage(1);
       }
-
-      // Ganti tipe kuis
       setQuizType(quizType === "Single" ? "Multiple" : "Single");
-
-      // Reset pagination dan soal
       setPagination({
         current_page: 1,
         last_page: 1,
         per_page: 1,
         total: 1,
       });
-      setCurrentQuestion(0); // Reset ke soal pertama
-      setSelectedAnswerID(null); // Hapus jawaban yang terpilih
+      setCurrentQuestion(0);
+      setSelectedAnswerID(null);
     } else {
-      // Menambahkan aksi jika validasi gagal, misalnya memberi peringatan
       toast.warn("Validasi gagal: Jawaban tidak sesuai dengan jumlah soal.");
     }
   };
@@ -253,6 +237,8 @@ export default function App() {
             handleChangeQuizType={handleChangeQuizType}
             isLastQuestionAnswered={isLastQuestionAnswered}
             currentPage={currentPage}
+            isAnswered={isAnswered} // Pass isAnswered to QuestionCard
+            handleCorrectAnswer={handleCorrectAnswer}
           />
         </div>
       </main>
