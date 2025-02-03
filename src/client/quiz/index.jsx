@@ -72,7 +72,9 @@ export default function App() {
           // // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
           if (
             quizType === "Single" &&
-            fetchedQuestions.every((q) => q.answers.length === questions.length)
+            fetchedQuestions.every(
+              (q) => q.answers.length > 0
+            )
           ) {
             setQuizType("Multiple");
             toast.info(
