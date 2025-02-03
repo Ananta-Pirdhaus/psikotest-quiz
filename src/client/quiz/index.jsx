@@ -72,9 +72,7 @@ export default function App() {
           // // Change quiz type to 'Multiple' if all answers are filled in the 'Single' quiz type
           if (
             quizType === "Single" &&
-            fetchedQuestions.every(
-              (q) => q.answers.length > 0
-            )
+            fetchedQuestions.every((q) => q.answers.length > 0)
           ) {
             setQuizType("Multiple");
             toast.info(
@@ -240,47 +238,22 @@ export default function App() {
       <Navbar />
       <main className="p-3 mt-5 flex-grow items-center justify-center">
         <div className="p-3">
-          {showProgress ? (
-            <ProgressCard
-              questions={questions}
-              currentQuestionNumber={currentQuestionNumber}
-              totalQuestions={pagination.total}
-              handleProgressToggle={() => setShowProgress(false)}
-              handleLinkFromProgress={(index) => {
-                setCurrentQuestion(index);
-                setSelectedAnswerID(
-                  localStorage.getItem(`question_${questions[index].id}`) ||
-                    null
-                );
-              }}
-            />
-          ) : showScore ? (
-            <ScoreReportCard
-              score={score}
-              quizLength={questions.length}
-              currentQuestionNumber={currentQuestionNumber}
-              totalQuestions={pagination.total}
-              handleRetakeQuiz={handleRetakeQuiz}
-            />
-          ) : (
-            <QuestionCard
-              IdSession={sessionId}
-              quizLength={questions.length}
-              question={questions[currentQuestion]}
-              selectedAnswerID={selectedAnswerID}
-              currentQuestionNumber={currentQuestionNumber}
-              totalQuestions={pagination.total}
-              handleAnswerOptionClick={handleAnswerOptionClick}
-              handleNextQuestion={handleNextQuestion}
-              handlePrevQuestion={handlePrevQuestion}
-              handleScoreQuiz={handleScoreQuiz}
-              handleProgressToggle={() => setShowProgress(!showProgress)}
-              quizType={quizType}
-              handleChangeQuizType={handleChangeQuizType}
-              isLastQuestionAnswered={isLastQuestionAnswered}
-              currentPage={currentPage}
-            />
-          )}
+          <QuestionCard
+            IdSession={sessionId}
+            quizLength={questions.length}
+            question={questions[currentQuestion]}
+            selectedAnswerID={selectedAnswerID}
+            currentQuestionNumber={currentQuestionNumber}
+            totalQuestions={pagination.total}
+            handleAnswerOptionClick={handleAnswerOptionClick}
+            handleNextQuestion={handleNextQuestion}
+            handlePrevQuestion={handlePrevQuestion}
+            handleScoreQuiz={handleScoreQuiz}
+            quizType={quizType}
+            handleChangeQuizType={handleChangeQuizType}
+            isLastQuestionAnswered={isLastQuestionAnswered}
+            currentPage={currentPage}
+          />
         </div>
       </main>
       <ToastContainer />
