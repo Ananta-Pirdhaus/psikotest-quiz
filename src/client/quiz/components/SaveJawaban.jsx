@@ -29,8 +29,8 @@ const SaveJawaban = ({
           sendAnswerToServer(storedAnswers); // Kirim jawaban jika sudah 3
         } else if (quizType === "multiple") {
           toast.error("You must select exactly 3 answers for this question.", {
-            position: "top-center",
-            autoClose: 3000,
+            position: "top-right",
+            autoClose: 2500,
           });
         } else {
           sendAnswerToServer(storedAnswers); // Untuk Single atau tipe lain, langsung kirim jawaban
@@ -41,10 +41,7 @@ const SaveJawaban = ({
     }
   }, [isSubmitting, selectedAnswer]);
 
-  const submitAllAnswers = async (answers) => {
-    const idSession = localStorage.getItem("IdSession");
-    const checkpointPage = localStorage.getItem("checkpointPage");
-
+  const submitAllAnswers = async (idSession, answers) => {
     if (!idSession || !Array.isArray(answers) || answers.length === 0) {
       toast.error("Invalid session or answers. Please check your data.", {
         position: "top-center",
@@ -59,10 +56,10 @@ const SaveJawaban = ({
     };
 
     try {
-      const response = await axios.get(`${BASE_URL}jawaban/save/${idSession}`, {
-        params: bodyReq,
-      });
-
+      const response = await axios.get(
+        `${BASE_URL}jawaban/save/${IdSession}`,
+        bodyReq
+      );
       if (response.data?.status === "error") {
         toast.error(response.data?.message || "Submission failed!", {
           position: "top-center",
@@ -71,15 +68,11 @@ const SaveJawaban = ({
         return;
       }
 
-      // Clear localStorage after successful submission
-      localStorage.removeItem("IdSession");
-      localStorage.removeItem("checkpointPage");
-
       toast.success("All answers submitted successfully!", {
         position: "top-center",
         autoClose: 3000,
       });
-      navigate(`/hasil-quiz/${idSession}`);
+      navigate(`/hasil-quiz/${IdSession}`);
     } catch (error) {
       toast.error("Failed to submit answers. Please try again.", {
         position: "top-center",
@@ -94,8 +87,8 @@ const SaveJawaban = ({
     // Untuk tipe "multiple", pastikan jawaban terdiri dari 3 pilihan
     if (quizType === "multiple" && options.length !== 3) {
       toast.error("You must select exactly 3 answers for this question.", {
-        position: "top-center",
-        autoClose: 3000,
+        position: "top-right",
+        autoClose: 2500,
       });
       return;
     }
@@ -112,8 +105,8 @@ const SaveJawaban = ({
       .post(`${BASE_URL}jawaban`, bodyReq)
       .then(() => {
         toast.success("Answer submitted successfully!", {
-          position: "top-center",
-          autoClose: 3000,
+          position: "top-right",
+          autoClose: 2500,
         });
       })
       .catch((error) => {
@@ -123,8 +116,8 @@ const SaveJawaban = ({
           )
         ) {
           toast.error("Invalid question ID. Please check your data.", {
-            position: "top-center",
-            autoClose: 3000,
+            position: "top-right",
+            autoClose: 2500,
           });
         } else if (
           error.response?.data?.errors?.["answer.question"]?.includes(
@@ -149,14 +142,14 @@ const SaveJawaban = ({
       .put(`${BASE_URL}jawaban`, bodyReq)
       .then(() => {
         toast.success("Answer updated successfully!", {
-          position: "top-center",
-          autoClose: 3000,
+          position: "top-right",
+          autoClose: 2500,
         });
       })
       .catch(() => {
         toast.error("Error updating your answer!", {
-          position: "top-center",
-          autoClose: 3000,
+          position: "top-right",
+          autoClose: 2500,
         });
       });
   };
@@ -164,24 +157,24 @@ const SaveJawaban = ({
   const validateData = (options, IdSession, questionId) => {
     if (!IdSession || typeof IdSession !== "string") {
       toast.error("Invalid session ID.", {
-        position: "top-center",
-        autoClose: 3000,
+        position: "top-right",
+        autoClose: 2500,
       });
       return false;
     }
 
     if (!questionId || typeof questionId !== "string") {
       toast.error("Invalid question ID.", {
-        position: "top-center",
-        autoClose: 3000,
+        position: "top-right",
+        autoClose: 2500,
       });
       return false;
     }
 
     if (!options || !Array.isArray(options) || options.length === 0) {
       toast.error("Invalid options selected.", {
-        position: "top-center",
-        autoClose: 3000,
+        position: "top-right",
+        autoClose: 2500,
       });
       return false;
     }

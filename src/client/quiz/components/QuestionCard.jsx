@@ -28,7 +28,18 @@ const QuestionCard = ({
   );
   const [isSubmitting, setIsSubmitting] = useState(false); // State for tracking submission
   const [currentQuestionId, setCurrentQuestionId] = useState(question.id);
-  const answeredOptionIds = question.answers.map((ans) => ans.option_id);
+  const [answeredOptionIds, setAnsweredOptionIds] = useState(
+    question.answers.map((ans) => ans.option_id)
+  );
+
+  useEffect(() => {
+    const correctAnswer = answeredOptionIds.some(
+      (id) => question.answers.find((ans) => ans.option_id === id)?.is_correct
+    );
+    if (correctAnswer) {
+      handleCorrectAnswer(true); // Update parent state to set isAnswered to true
+    }
+  }, [answeredOptionIds, handleCorrectAnswer]);
 
   useEffect(() => {
     setSelectedAnswerIDs(selectedAnswers);
@@ -134,13 +145,6 @@ const QuestionCard = ({
               const isCorrectAnswer = answeredOptionIds.includes(
                 answerOption.id
               );
-
-              // Call handleCorrectAnswer to update parent state when the answer is correct
-              useEffect(() => {
-                if (isCorrectAnswer) {
-                  handleCorrectAnswer(true); // Update parent state to set isAnswered to true
-                }
-              }, [isCorrectAnswer, handleCorrectAnswer]);
 
               return (
                 <button

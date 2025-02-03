@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 import QuestionCard from "./components/QuestionCard";
-import ScoreReportCard from "./components/ScoreReportCard";
-import ProgressCard from "./components/ProgressCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -49,7 +47,7 @@ export default function App() {
     if (currentPage) {
       localStorage.setItem("checkpointPage", currentPage);
     }
-  }, [sessionId]);
+  }, [currentPage]);
 
   useEffect(() => {
     if (sessionId) {
@@ -64,6 +62,16 @@ export default function App() {
             );
             navigate("/peserta");
             return;
+          }
+
+          if (
+            quizType === "Single" &&
+            fetchedQuestions.every((q) => q.answers.length > 0)
+          ) {
+            setQuizType("Multiple");
+            toast.info(
+              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
+            );
           }
 
           setQuestions(fetchedQuestions);
@@ -159,41 +167,25 @@ export default function App() {
     setShowScore(true);
   };
 
-  const handleRetakeQuiz = () => {
-    setShowScore(false);
-    setCurrentQuestion(0);
-    setSelectedAnswerID(null);
-    setScore(0);
+
+  const handleChangeQuizType = () => {
+    if (pagination.current_page === pagination.last_page) {
+      // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
+      setCurrentPage(1); // Memulai dari halaman 1
+    }
+
+    // Ganti tipe kuis
+    setQuizType(quizType === "Single" ? "Multiple" : "Single");
+
+    // Reset pagination dan soal
     setPagination({
       current_page: 1,
       last_page: 1,
       per_page: 1,
       total: 1,
     });
-    setQuestions([]);
-    localStorage.clear();
-  };
-
-  const handleChangeQuizType = () => {
-    if (
-      quizType === "Single" &&
-      questions.every((q) => q.answers.length === questions.length)
-    ) {
-      if (pagination.current_page === pagination.last_page) {
-        setCurrentPage(1);
-      }
-      setQuizType(quizType === "Single" ? "Multiple" : "Single");
-      setPagination({
-        current_page: 1,
-        last_page: 1,
-        per_page: 1,
-        total: 1,
-      });
-      setCurrentQuestion(0);
-      setSelectedAnswerID(null);
-    } else {
-      toast.warn("Validasi gagal: Jawaban tidak sesuai dengan jumlah soal.");
-    }
+    setCurrentQuestion(0); // Reset ke soal pertama
+    setSelectedAnswerID(null); // Hapus jawaban yang terpilih
   };
 
   if (loading) {
