@@ -36,7 +36,10 @@ export default function App() {
     per_page: 1,
     total: 1,
   });
-  const [quizType, setQuizType] = useState("Single");
+  const [quizType, setQuizType] = useState(
+    localStorage.getItem("quizType") || "Single"
+  );
+
   const [currentQuestionNumber, setCurrentQuestionNumber] = useState(1);
   const [currentPage, setCurrentPage] = useState(
     parseInt(localStorage.getItem("checkpointPage")) || 1
@@ -48,6 +51,10 @@ export default function App() {
       localStorage.setItem("checkpointPage", currentPage);
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    localStorage.setItem("quizType", quizType);
+  }, [quizType]);
 
   useEffect(() => {
     if (sessionId) {
@@ -62,16 +69,6 @@ export default function App() {
             );
             navigate("/peserta");
             return;
-          }
-
-          if (
-            quizType === "Single" &&
-            fetchedQuestions.every((q) => q.answers.length > 0)
-          ) {
-            setQuizType("Multiple");
-            toast.info(
-              "Tipe kuis diubah menjadi Multiple karena semua jawaban sudah terisi!"
-            );
           }
 
           setQuestions(fetchedQuestions);
@@ -166,7 +163,6 @@ export default function App() {
     setScore(finalScore);
     setShowScore(true);
   };
-
 
   const handleChangeQuizType = () => {
     if (pagination.current_page === pagination.last_page) {

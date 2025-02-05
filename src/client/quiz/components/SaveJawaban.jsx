@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -13,33 +13,34 @@ const SaveJawaban = ({
   quizType,
 }) => {
   const navigate = useNavigate();
-  let storedAnswers = []; // Variabel untuk menyimpan jawaban sementara
+  const [storedAnswers, setStoredAnswers] = useState([]); // Menggunakan useState untuk menyimpan jawaban
 
   useEffect(() => {
     if (isSubmitting) {
       // Kirimkan semua jawaban hanya jika isSubmitting bernilai true
-      submitAllAnswers(IdSession, selectedAnswer);
+      submitAllAnswers(IdSession, storedAnswers);
     } else if (selectedAnswer) {
       if (Array.isArray(selectedAnswer) && selectedAnswer.length > 0) {
         // Menyimpan jawaban untuk Multiple
-        storedAnswers = selectedAnswer;
+        setStoredAnswers(selectedAnswer);
 
         // Cek jika quizType adalah 'multiple', baru periksa jumlah jawaban
-        if (quizType === "multiple" && storedAnswers.length === 3) {
-          sendAnswerToServer(storedAnswers); // Kirim jawaban jika sudah 3
+        if (quizType === "multiple" && selectedAnswer.length === 3) {
+          sendAnswerToServer(selectedAnswer); // Kirim jawaban jika sudah 3
         } else if (quizType === "multiple") {
           toast.error("You must select exactly 3 answers for this question.", {
             position: "top-right",
             autoClose: 2500,
           });
         } else {
-          sendAnswerToServer(storedAnswers); // Untuk Single atau tipe lain, langsung kirim jawaban
+          sendAnswerToServer(selectedAnswer); // Untuk Single atau tipe lain, langsung kirim jawaban
         }
       } else if (typeof selectedAnswer === "string") {
-        sendAnswerToServer([selectedAnswer]); // Single option converted to array
+        setStoredAnswers([selectedAnswer]); // Single option converted to array
+        sendAnswerToServer([selectedAnswer]); // Kirim jawaban langsung
       }
     }
-  }, [isSubmitting, selectedAnswer]);
+  }, [isSubmitting, selectedAnswer, quizType]);
 
   const submitAllAnswers = async (idSession, answers) => {
     if (!idSession || !Array.isArray(answers) || answers.length === 0) {
@@ -72,7 +73,10 @@ const SaveJawaban = ({
         position: "top-center",
         autoClose: 3000,
       });
-      navigate(`/hasil-quiz/${IdSession}`);
+      navigate(`/finish-quiz`);
+
+      localStorage.removeItem("checkpointPage");
+      localStorage.removeItem("quizType");
     } catch (error) {
       toast.error("Failed to submit answers. Please try again.", {
         position: "top-center",

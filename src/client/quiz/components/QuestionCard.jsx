@@ -28,18 +28,7 @@ const QuestionCard = ({
   );
   const [isSubmitting, setIsSubmitting] = useState(false); // State for tracking submission
   const [currentQuestionId, setCurrentQuestionId] = useState(question.id);
-  const [answeredOptionIds, setAnsweredOptionIds] = useState(
-    question.answers.map((ans) => ans.option_id)
-  );
-
-  useEffect(() => {
-    const correctAnswer = answeredOptionIds.some(
-      (id) => question.answers.find((ans) => ans.option_id === id)?.is_correct
-    );
-    if (correctAnswer) {
-      handleCorrectAnswer(true); // Update parent state to set isAnswered to true
-    }
-  }, [answeredOptionIds, handleCorrectAnswer]);
+  const answeredOptionIds = question.answers.map((ans) => ans.option_id);
 
   useEffect(() => {
     setSelectedAnswerIDs(selectedAnswers);
@@ -92,6 +81,18 @@ const QuestionCard = ({
     }
   };
 
+  const correctAnswers =
+    question.options.filter((answerOption) =>
+      answeredOptionIds.includes(answerOption.id)
+    ).length > 0;
+
+  // Pastikan useEffect selalu dijalankan dengan jumlah yang sama dalam setiap render
+  useEffect(() => {
+    if (correctAnswers) {
+      handleCorrectAnswer(true);
+    }
+  }, [correctAnswers, handleCorrectAnswer]);
+
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-md shadow sm:p-8">
@@ -142,16 +143,12 @@ const QuestionCard = ({
                 selectedAnswerIDs?.includes(answerOption.id) ||
                 answeredOptionIds.includes(answerOption.id);
 
-              const isCorrectAnswer = answeredOptionIds.includes(
-                answerOption.id
-              );
-
               return (
                 <button
                   key={answerOption.id}
                   onClick={() => handleAnswerClick(answerOption.id)}
                   className={`w-full text-left font-semibold text-gray-900 ${
-                    isSelected || isCorrectAnswer
+                    isSelected
                       ? "bg-yellow-100 border border-yellow-400"
                       : "border border-orange-600 hover:bg-orange-600"
                   } focus:outline-none hover:bg-yellow-200 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
@@ -160,7 +157,6 @@ const QuestionCard = ({
                 </button>
               );
             })}
-
             <div className="flex justify-center p-4">
               {/* Previous Button */}
               <button
