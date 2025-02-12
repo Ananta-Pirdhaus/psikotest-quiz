@@ -58,7 +58,7 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
       if (response.status === 200) {
         // Menampilkan pemberitahuan sukses dengan Toastify
         toast.success("Jawaban berhasil disimpan!");
-        navigate(`/finish-quiz`);
+        navigate(`/hasil-quiz/${sessionId}`);
       }
     } catch (err) {
       // Menampilkan pemberitahuan error dengan Toastify
