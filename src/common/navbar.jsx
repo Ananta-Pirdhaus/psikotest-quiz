@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 import LogoUnesa from "../common/logo-unesa.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [isNavbarVisible, setNavbarVisible] = useState(false);
   const [resizeTimer, setResizeTimer] = useState(null);
-
+  const navigate = useNavigate();
   const toggleNavbar = () => {
     setNavbarVisible(!isNavbarVisible);
   };
@@ -36,7 +37,7 @@ export default function Header() {
           <div className="flex items-center justify-between w-full lg:w-auto lg:flex-1">
             <a
               href="#"
-              className="text-deep-blue text-[32px] font-bold uppercase tracking-tight"
+              className="text-dark-gray text-[32px] font-bold uppercase tracking-tight"
             >
               <span className="hidden lg:inline">CAREER THE EXPLORER</span>
               <span className="lg:hidden">CTE</span>
@@ -44,7 +45,7 @@ export default function Header() {
             {/* Tombol untuk Toggle Menu pada Mobile */}
             <button
               type="button"
-              className="lg:hidden text-deep-blue text-2xl"
+              className="lg:hidden text-dark-gray text-2xl"
               onClick={toggleNavbar}
             >
               <i className="fas fa-bars"></i>
@@ -59,17 +60,17 @@ export default function Header() {
           >
             <button
               type="button"
-              className="absolute top-5 right-5 lg:hidden text-2xl text-deep-blue"
+              className="absolute top-5 right-5 lg:hidden text-2xl text-dark-gray"
               onClick={toggleNavbar}
             >
               <i className="fa-solid fa-xmark"></i>
             </button>
 
-            <ul className="flex flex-col pb-7 lg:flex-row lg:space-x-8 text-deep-blue">
+            <ul className="flex flex-col pb-7 lg:flex-row lg:space-x-8 text-dark-gray">
               <li className="py-2 lg:py-0">
                 <a
                   href=""
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-sky-blue"
+                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
                 >
                   Home
                 </a>
@@ -77,7 +78,7 @@ export default function Header() {
               <li className="py-2 lg:py-0">
                 <a
                   href="#features"
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-sky-500"
+                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
                 >
                   Features
                 </a>
@@ -85,7 +86,7 @@ export default function Header() {
               <li className="py-2 lg:py-0">
                 <a
                   href=""
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-sky-blue"
+                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
                 >
                   Visi & Misi
                 </a>
@@ -93,7 +94,7 @@ export default function Header() {
               <li className="py-2 lg:py-0">
                 <a
                   href="#"
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-sky-blue"
+                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
                 >
                   Test
                 </a>
@@ -103,28 +104,24 @@ export default function Header() {
         </div>
       </nav>
 
-      {/* Header  */}
-      <section className="text-gray-600 body-font bg-sky-blue pt-[70px]">
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      {/* Header */}
+      <section className="text-gray-800 body-font bg-amber-100 pt-[70px] relative overflow-hidden">
+        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center relative z-10">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <div className="mb-4 text-sky-blue text-lg uppercase tracking-widest">
-              Career The Explorer
-            </div>
-            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold text-deep-blue">
+            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold text-gray-900">
               Temukan Potensi Karier Terbaikmu
             </h1>
-            <p className="text-lg max-w-xl mb-8 text-deep-blue">
+            <p className="text-lg max-w-xl mb-8 text-gray-800">
               "Career The Explorer" adalah platform inovatif yang dirancang
               untuk membantu Anda mengeksplorasi potensi karier terbaik melalui
-              tes psikologi. Di sini, Anda dapat bermain sambil belajar tentang
-              jalur karier yang paling sesuai dengan minat, kepribadian, dan
-              bakat Anda. Mulailah perjalanan karier Anda dan temukan arah masa
-              depan yang paling selaras dengan diri Anda.
+              tes psikologi.
             </p>
             <div className="flex justify-center">
-              <button className="inline-flex text-white bg-deep-blue border-0 py-3 px-8 rounded-full font-semibold hover:bg-deep-blue/80 transition duration-300 text-lg">
-                {/* Menggunakan FontAwesomeIcon di tombol */}
-
+              <button
+                type="button"
+                className="inline-flex text-white bg-orange-600 border-0 py-3 px-8 rounded-full font-semibold hover:bg-orange-500 transition duration-300 text-lg"
+                onClick={() => navigate("/peserta")}
+              >
                 <span>Mulai Tes Sekarang</span>
               </button>
             </div>

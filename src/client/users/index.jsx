@@ -46,10 +46,10 @@ function Index() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-purple-50">
+      <div className="flex justify-center items-center min-h-screen bg-amber-50">
         <button
           type="button"
-          className="pointer-events-none inline-block rounded bg-gradient-to-r from-purple-400 to-purple-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out disabled:opacity-70"
+          className="pointer-events-none inline-block rounded bg-gradient-to-r from-amber-400 to-amber-600 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-lg transition duration-150 ease-in-out disabled:opacity-70"
           disabled
         >
           <div

@@ -9,14 +9,15 @@ import {
 
 export default function Banner() {
   return (
-    <div id="features">
-      <section className="py-16 sc-popular bg-violet-dark-active">
+    <div id="features" className="bg-gray-300">
+      <section className="py-16 bg-gradient-to-b from-amber-100 to-orange-500">
         <div className="container">
-          <div className="sc-title">
-            <h3>
-              Career The Explorer <span>Psychotests</span>
-            </h3>
-            <div className="line"></div>
+          <div className="join-title text-center py-5 text-orange-600">
+            <h1>
+              Career The Explorer{" "}
+              <span className="text-orange-400">Psychotests</span>
+            </h1>
+            <div className="line bg-orange-300"></div>
           </div>
 
           <div className="game-card-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -45,82 +46,42 @@ export default function Banner() {
                 ],
                 icon: faUserCog,
               },
-              {
-                id: 3,
-                title: "Logic and Reasoning Test",
-                description:
-                  "Tes ini dirancang untuk mengukur kemampuan Anda dalam berpikir logis dan menganalisis situasi dengan cara yang terstruktur.",
-                features: [
-                  "Analytical skills",
-                  "Logical thinking",
-                  "Attention to detail",
-                ],
-                icon: faClipboardList,
-              },
-              {
-                id: 4,
-                title: "Career Interests Test",
-                description:
-                  "Tes ini membantu Anda memahami minat karir Anda dan mengeksplorasi bidang pekerjaan yang sesuai dengan minat tersebut.",
-                features: [
-                  "Career preferences",
-                  "Job satisfaction",
-                  "Interest alignment",
-                ],
-                icon: faClock,
-              },
-              {
-                id: 5,
-                title: "Emotional Intelligence Test",
-                description:
-                  "Tes ini menilai seberapa baik Anda mengenali, mengelola, dan mengontrol emosi Anda sendiri serta berinteraksi dengan orang lain.",
-                features: ["Emotional awareness", "Self-regulation", "Empathy"],
-                icon: faBrain,
-              },
-              {
-                id: 6,
-                title: "Skills Assessment Test",
-                description:
-                  "Tes ini mengukur keterampilan teknis dan keahlian khusus yang relevan dengan berbagai bidang karir.",
-                features: [
-                  "Technical skills",
-                  "Problem-solving ability",
-                  "Specialized knowledge",
-                ],
-                icon: faClipboardList,
-              },
             ].map((test) => (
-              <div className="game-card rounded-none" key={test.id}>
+              <div
+                className="game-card rounded-lg bg-orange-100 shadow-md"
+                key={test.id}
+              >
                 <div className="game-card-top img-fit-cover">
                   <div className="icon-container text-center py-10">
                     <FontAwesomeIcon
                       icon={test.icon}
                       size="3x"
-                      className="text-white"
+                      className="text-orange-500"
                     />
                   </div>
                 </div>
-                <div className="game-card-bottom">
+                <div className="game-card-bottom p-4">
                   <div className="flex flex-col sm:flex-row justify-between items-start flex-wrap">
                     <div className="py-1">
-                      <h4 className="text-white uppercase game-card-title">
+                      <h4 className="text-orange-600 uppercase game-card-title">
                         {test.title}
                       </h4>
-                      <p className="para-text">{test.description}</p>
+                      <p className=" text-orange-800">
+                        {test.description}
+                      </p>
                     </div>
-                    <div className="star-rating mt-2 sm:mt-0 py-1">
-                      <img src="../assets/icons/star-green.svg" alt="" />
-                      <img src="../assets/icons/star-green.svg" alt="" />
-                      <img src="../assets/icons/star-green.svg" alt="" />
-                      <img src="../assets/icons/star-green.svg" alt="" />
-                      <img src="../assets/icons/star-green-half.svg" alt="" />
+                    <div className="mt-2 sm:mt-0 py-1 flex gap-1">
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-400">★</span>
+                      <span className="text-yellow-300">☆</span>
                     </div>
                   </div>
-
                   <div className="block-wrap flex justify-between items-end">
                     <div className="details-group">
-                      <p className="font-semibold">Features:</p>
-                      <ul>
+                      <p className="font-semibold text-orange-600">Features:</p>
+                      <ul className="text-orange-500 list-disc pl-4">
                         {test.features.map((feature, index) => (
                           <li key={index}>{feature}</li>
                         ))}
@@ -130,12 +91,6 @@ export default function Banner() {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="flex justify-center mt-[60px]">
-            <a href="#" className="section-btn">
-              See More Psychotests
-            </a>
           </div>
         </div>
       </section>

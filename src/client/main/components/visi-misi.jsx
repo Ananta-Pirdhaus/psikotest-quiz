@@ -2,40 +2,15 @@ import React from "react";
 
 export default function GamingLibrary() {
   return (
-    <section className="py-16 sc-join flex items-center justify-center bg-deep-blue relative after:absolute after:content-[''] after:bg-gradient-to-b after:from-black/50 after:to-black/50 after:bg-center after:bg-cover after:bg-no-repeat">
+    <section className="py-16 sc-join flex items-center justify-center bg-orange-600 relative after:absolute after:content-[''] after:bg-gradient-to-b after:from-black/50 after:to-black/50 after:bg-center after:bg-cover after:bg-no-repeat">
       <div className="container w-full text-white max-w-7xl">
-        {/* Top Section - Test Selection */}
-        <div className="mb-6 text-center">
-          <h2 className="join-title uppercase mb-4">
-            Choose the <span>Test</span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center mx-auto">
-            {/* Career the Explorer Test Card */}
-            <div className="bg-light-gray p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-dashed border-2 border-gray-400">
-              <h4 className="text-dark-gray text-xl font-semibold mb-2">
-                Career the Explorer
-              </h4>
-              <p className="text-dark-gray mb-4">
-                A psychology test to explore your career potential and
-                strengths.
-              </p>
-              <a
-                href="/peserta"
-                className="bg-sky-blue text-white py-2 px-4 rounded-md hover:bg-deep-blue transition inline-flex items-center"
-              >
-                Start Test <i className="fas fa-chevron-right ml-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
         {/* Members List */}
         <div className="mb-6 text-center">
-          <h3 className="join-title">Members</h3>
+          <h3 className="join-title py-5">Members</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center mx-auto">
             <div className="bg-light-gray p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-dashed border-2 border-gray-400">
               <div className="flex items-center mb-4">
-                <i className="fas fa-user-plus text-sky-blue mr-3 text-2xl"></i>
+                <i className="fas fa-user-plus text-orange-600 mr-3 text-2xl"></i>
                 <h4 className="text-dark-gray font-semibold text-lg">
                   John Doe
                 </h4>
@@ -46,7 +21,7 @@ export default function GamingLibrary() {
             </div>
             <div className="bg-light-gray p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-dashed border-2 border-gray-400">
               <div className="flex items-center mb-4">
-                <i className="fas fa-user-plus text-sky-blue mr-3 text-2xl"></i>
+                <i className="fas fa-user-plus text-orange-600 mr-3 text-2xl"></i>
                 <h4 className="text-dark-gray font-semibold text-lg">
                   Jane Smith
                 </h4>
@@ -58,7 +33,7 @@ export default function GamingLibrary() {
             </div>
             <div className="bg-light-gray p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300 border-dashed border-2 border-gray-400">
               <div className="flex items-center mb-4">
-                <i className="fas fa-user-plus text-sky-blue mr-3 text-2xl"></i>
+                <i className="fas fa-user-plus text-orange-600 mr-3 text-2xl"></i>
                 <h4 className="text-dark-gray font-semibold text-lg">
                   Michael Johnson
                 </h4>

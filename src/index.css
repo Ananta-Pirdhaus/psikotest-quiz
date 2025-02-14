@@ -74,9 +74,10 @@ ul {
 .game-card .game-card-top {
   background: linear-gradient(
     180deg,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.27) 92.08%
+    rgba(255, 255, 255, 0) 0%,
+    rgba(200, 200, 200, 0.1) 92.08%
   );
+
   @apply h-[280px] overflow-hidden relative border-dashed border-2 border-gray-400; /* Menambahkan border-dashed pada bagian atas */
 }
 
@@ -93,7 +94,7 @@ ul {
 }
 
 .game-card .game-card-bottom {
-  @apply flex-1 bg-sky-blue py-5 px-[18px] border-dashed border-2 border-gray-400; /* Menambahkan border-dashed pada bagian bawah */
+  @apply flex-1 bg-amber-100 py-5 px-[18px] border-dashed border-2 border-gray-400; /* Menambahkan border-dashed pada bagian bawah */
 }
 
 /* Game Card Title - Tanpa Border */
@@ -126,7 +127,7 @@ ul {
 }
 
 .join-title span {
-  @apply text-sky-blue font-right;
+  @apply text-amber-100 font-right;
 }
 
 /* Posts Section */
@@ -139,7 +140,7 @@ ul {
 }
 
 .game-post-body .para-text {
-  @apply text-white text-base leading-[1.4] mt-5 mb-6;
+  @apply text-gray-800 text-base leading-[1.4] mt-5 mb-6;
 }
 
 .game-post-body .btn-secondary {

@@ -10,9 +10,9 @@ export default function Footer() {
           <div className="text-dark-gray">
             <a
               href="#"
-              className="text-deep-blue uppercase block whitespace-nowrap font-bold text-[32px] mb-4"
+              className="text-dark-gray uppercase block whitespace-nowrap font-bold text-[32px] mb-4"
             >
-              Career The <span className="text-sky-blue">Explorer</span>
+              Career The <span className="text-orange-500">Explorer</span>
             </a>
             <p className="max-w-[380px] mx-auto lg:ml-0 text-dark-gray">
               Career The Explorer adalah platform yang menyediakan layanan tes
@@ -31,7 +31,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Gaming
                 </a>
@@ -39,7 +39,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Product
                 </a>
@@ -47,7 +47,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Social Network
                 </a>
@@ -55,7 +55,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Community
                 </a>
@@ -72,7 +72,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Settings & Privacy
                 </a>
@@ -80,7 +80,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Help & Support
                 </a>
@@ -88,7 +88,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Live Actions
                 </a>
@@ -96,7 +96,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#"
-                  className="text-deep-blue opacity-70 hover:opacity-100 transition ease-in-out duration-300"
+                  className="text-dark-gray opacity-70 hover:opacity-100 transition ease-in-out duration-300"
                 >
                   Our News
                 </a>
@@ -120,7 +120,7 @@ export default function Footer() {
                   placeholder="Your email address"
                 />
                 <button
-                  className="bg-sky-blue inline-flex items-center justify-center w-12 hover:scale-[1.1] text-white transition ease-in-out duration-300"
+                  className="bg-orange-500 inline-flex items-center justify-center w-12 hover:scale-[1.1] text-white transition ease-in-out duration-300"
                   type="button"
                 >
                   <i className="fa-solid fa-paper-plane"></i>
@@ -129,27 +129,6 @@ export default function Footer() {
             </form>
           </div>
         </div>
-      </div>
-
-      {/* Footer Bottom with Light Background */}
-      <div className="bg-light-gray py-6 px-0">
-        <ul className="flex justify-center space-x-[14px] lg:space-x-7">
-          <li>
-            <a href="#" className="text-deep-blue">
-              Privacy
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-deep-blue">
-              Terms
-            </a>
-          </li>
-          <li>
-            <a href="#" className="text-deep-blue">
-              Contact
-            </a>
-          </li>
-        </ul>
       </div>
     </footer>
   );

@@ -3,11 +3,11 @@ import LogoUnesa from "../../../common/logo-unesa.png";
 
 export default function VisiMisi() {
   return (
-    <section className="py-16 bg-sky-blue" >
+    <section className="py-16 bg-gradient-to-t from-amber-100 to-orange-200">
       <div className="container">
-        <div className="sc-title">
+        <div className="join-title text-center  py-5 text-orange-800">
           <h3>
-            Visi dan <span className="text-white">Misi</span>
+            Visi dan <span className="">Misi</span>
           </h3>
         </div>
 

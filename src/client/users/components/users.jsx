@@ -4,7 +4,7 @@ import Select from "react-select";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
-
+import image_test from "../../../assets/test_svg.svg";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
@@ -221,7 +221,7 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
 
                 {/* Sign Up Button */}
                 <button
-                  className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  className="mt-5 tracking-wide font-semibold bg-orange-500 text-gray-100 w-full py-4 rounded-lg hover:bg-orange-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   onClick={handleSubmit}
                 >
                   <span className="ml-3">Daftar</span>
@@ -232,12 +232,11 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
         </div>
 
         {/* Right Side Background Image */}
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
+        <div className="flex-1 bg-amber-100 text-center hidden lg:flex">
           <div
             className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
             style={{
-              backgroundImage:
-                "url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg')",
+              backgroundImage: `url(${image_test})`,
             }}
           />
         </div>
