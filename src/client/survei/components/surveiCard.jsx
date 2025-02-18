@@ -69,52 +69,56 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-2xl">
+    <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-2xl">
       {questions.map((question) => {
         const surveyType = question.type;
 
         return (
           <div key={question.id} className="mb-6">
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-gray-700">
-                Pertanyaan
-              </h2>
-              <p className="mt-2 text-gray-600">{question.question}</p>
-            </div>
-
-            {/* Display scale options as buttons if surveyType is 'Scale' */}
-            {surveyType === "Scale" && (
-              <div className="mt-4">
-                <p className="text-gray-700">Pilih jawaban Anda:</p>
-                <div className="flex space-x-4 mt-2">
-                  {[
-                    "Sangat Setuju",
-                    "Setuju",
-                    "Tidak Setuju",
-                    "Sangat Tidak Setuju",
-                  ].map((option) => (
-                    <button
-                      key={option}
-                      className={`w-1/4 max-w-xs py-1 px-3 rounded-lg text-white ${
-                        answers[question.id].selectedAnswer === option
-                          ? "bg-blue-700" // Darker color when selected
-                          : "bg-blue-500 hover:bg-blue-600"
-                      }`}
-                      onClick={() => handleScaleSelection(question.id, option)}
-                    >
-                      {option}
-                    </button>
-                  ))}
-                </div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+              {/* Left side: Question */}
+              <div className="flex-1 pr-4 mb-4 sm:mb-0">
+                <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 break-words">
+                  {question.question}
+                </h2>
               </div>
-            )}
+
+              {/* Right side: Answer Options */}
+              {surveyType === "Scale" && (
+                <div className="flex flex-col items-center space-y-2 w-full sm:w-1/2">
+                  <p className="text-lg text-gray-700">Pilih jawaban Anda:</p>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
+                    {[
+                      "Sangat Setuju",
+                      "Setuju",
+                      "Tidak Setuju",
+                      "Sangat Tidak Setuju",
+                    ].map((option) => (
+                      <button
+                        key={option}
+                        className={`w-full h-16 py-2 px-6 rounded-lg text-white font-semibold transition-all duration-200 transform ${
+                          answers[question.id].selectedAnswer === option
+                            ? "bg-yellow-600 shadow-lg"
+                            : "bg-orange-500 hover:bg-orange-600"
+                        }`}
+                        onClick={() =>
+                          handleScaleSelection(question.id, option)
+                        }
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Display a textarea if surveyType is 'Text' */}
             {surveyType === "Text" && (
               <div className="mt-4">
-                <p className="text-gray-700">Tulis jawaban Anda:</p>
+                <p className="text-lg text-gray-700">Tulis jawaban Anda:</p>
                 <textarea
-                  className="w-full p-3 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                   rows="4"
                   placeholder="Tulis jawaban di sini..."
                   value={answers[question.id].textAnswer}
@@ -127,9 +131,9 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
       })}
 
       {/* Save Answer Button at the bottom */}
-      <div className="mt-4 text-center">
+      <div className="mt-6 text-center">
         <button
-          className="py-2 px-6 bg-green-500 text-white rounded-lg hover:bg-green-600"
+          className="py-2 px-6 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all duration-300"
           onClick={handleSaveAnswers}
           disabled={loading}
         >

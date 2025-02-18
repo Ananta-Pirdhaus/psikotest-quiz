@@ -5,6 +5,7 @@ import QuestionCard from "./components/QuestionCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
+import PanduanCard from "./components/PanduanCard";
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
@@ -22,8 +23,22 @@ const fetchQuestionsData = async (sessionId, quizType, page) => {
   }
 };
 
+const fetchPanduanData = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}panduan`);
+    const panduan = response.data.data || [];
+    console.log("Fetched panduan:", panduan);
+    return panduan;
+  } catch (error) {
+    console.error("Error fetching panduan data:", error);
+    return [];
+  }
+};
+
 export default function App() {
   const { sessionId } = useParams();
+  const [panduanList, setPanduanList] = useState([]);
+  const [showPanduan, setShowPanduan] = useState(true);
   const navigate = useNavigate();
   const [questions, setQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -184,6 +199,31 @@ export default function App() {
     setSelectedAnswerID(null); // Hapus jawaban yang terpilih
   };
 
+  // Fetch panduan data
+  useEffect(() => {
+    const initializePanduan = async () => {
+      try {
+        const panduan = await fetchPanduanData();
+        setPanduanList([panduan]); // Wrap it in an array for rendering
+      } catch (error) {
+        console.error("Error fetching panduan:", error);
+      }
+    };
+
+    initializePanduan();
+  }, []);
+
+  useEffect(() => {
+    const savedCheckpointPage = localStorage.getItem("checkpointPage");
+    const savedQuizType = localStorage.getItem("quizType");
+
+    if (savedCheckpointPage === "1" && savedQuizType === "Single") {
+      setShowPanduan(true);
+    } else {
+      setShowPanduan(false);
+    }
+  }, []);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-50">
@@ -208,27 +248,43 @@ export default function App() {
   return (
     <div className="flex flex-col h-screen">
       <Navbar />
-      <main className="p-3 mt-5 flex-grow items-center justify-center">
-        <div className="p-3">
-          <QuestionCard
-            IdSession={sessionId}
-            quizLength={questions.length}
-            question={questions[currentQuestion]}
-            selectedAnswerID={selectedAnswerID}
-            currentQuestionNumber={currentQuestionNumber}
-            totalQuestions={pagination.total}
-            handleAnswerOptionClick={handleAnswerOptionClick}
-            handleNextQuestion={handleNextQuestion}
-            handlePrevQuestion={handlePrevQuestion}
-            handleScoreQuiz={handleScoreQuiz}
-            quizType={quizType}
-            handleChangeQuizType={handleChangeQuizType}
-            isLastQuestionAnswered={isLastQuestionAnswered}
-            currentPage={currentPage}
-            isAnswered={isAnswered} // Pass isAnswered to QuestionCard
-            handleCorrectAnswer={handleCorrectAnswer}
-          />
-        </div>
+      <main className="p-3 mt-5 flex-grow flex items-center justify-center">
+        {/* If showPanduan is true, display the guide */}
+        {showPanduan ? (
+          <div className="p-3 max-w-3xl w-full bg-gray-100 rounded-lg shadow-md text-center">
+            {panduanList.map((panduan, index) => (
+              <PanduanCard key={index} panduan={panduan} />
+            ))}
+            <button
+              className="mt-4 px-4 py-2 w-full bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+              onClick={() => setShowPanduan(false)} // Click to start the quiz
+            >
+              Mulai Quiz
+            </button>
+          </div>
+        ) : (
+          // If showPanduan is false, display the QuestionCard
+          <div className="p-3 max-w-3xl w-full bg-white rounded-lg shadow-md">
+            <QuestionCard
+              IdSession={sessionId}
+              quizLength={questions.length}
+              question={questions[currentQuestion]}
+              selectedAnswerID={selectedAnswerID}
+              currentQuestionNumber={currentQuestionNumber}
+              totalQuestions={pagination.total}
+              handleAnswerOptionClick={handleAnswerOptionClick}
+              handleNextQuestion={handleNextQuestion}
+              handlePrevQuestion={handlePrevQuestion}
+              handleScoreQuiz={handleScoreQuiz}
+              quizType={quizType}
+              handleChangeQuizType={handleChangeQuizType}
+              isLastQuestionAnswered={isLastQuestionAnswered}
+              currentPage={currentPage}
+              isAnswered={isAnswered} // Pass isAnswered to QuestionCard
+              handleCorrectAnswer={handleCorrectAnswer}
+            />
+          </div>
+        )}
       </main>
       <ToastContainer />
     </div>

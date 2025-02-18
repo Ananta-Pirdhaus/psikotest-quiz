@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 import LogoUnesa from "../common/logo-unesa.png";
 import { useNavigate } from "react-router-dom";
+import bgHeader from ".././assets/bg-header.webp";
 
 export default function Header() {
   const [isNavbarVisible, setNavbarVisible] = useState(false);
