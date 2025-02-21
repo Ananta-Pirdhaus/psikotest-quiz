@@ -92,7 +92,7 @@ export default function Header() {
                   </li>
                   <li>
                     <a href="#contact" className="hover:text-orange-500">
-                      Contact
+                      Kontak
                     </a>
                   </li>
                 </ul>
@@ -118,7 +118,7 @@ export default function Header() {
             </li>
             <li>
               <a href="#contact" className="hover:text-orange-500">
-                Contact
+                Kontak
               </a>
             </li>
           </ul>
