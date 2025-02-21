@@ -1,139 +1,187 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 import LogoUnesa from "../common/logo-unesa.png";
 import { useNavigate } from "react-router-dom";
-import bgHeader from ".././assets/bg-header.webp";
+import { motion, AnimatePresence } from "framer-motion";
+import LogoLarge from "../assets/logo_large.png";
+import Logo from "../assets/logo.png";
 
 export default function Header() {
   const [isNavbarVisible, setNavbarVisible] = useState(false);
-  const [resizeTimer, setResizeTimer] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navigate = useNavigate();
+
   const toggleNavbar = () => {
     setNavbarVisible(!isNavbarVisible);
   };
 
-  const handleResize = () => {
-    document.body.classList.add("resize-animation-stopper");
-    clearTimeout(resizeTimer);
-    const timer = setTimeout(() => {
-      document.body.classList.remove("resize-animation-stopper");
-    }, 400);
-    setResizeTimer(timer);
-  };
-
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      clearTimeout(resizeTimer);
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
-  }, [resizeTimer]);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <header className="relative w-full">
-      <nav className="fixed left-0 top-0 w-full min-h-[70px] bg-white z-40 flex items-center shadow-md">
-        <div className="container mx-auto flex items-center justify-between px-4 lg:px-8">
-          {/* Logo */}
-          <div className="flex items-center justify-between w-full lg:w-auto lg:flex-1">
-            <a
-              href="#"
-              className="text-dark-gray text-[32px] font-bold uppercase tracking-tight"
-            >
-              <span className="hidden lg:inline">CAREER THE EXPLORER</span>
-              <span className="lg:hidden">CTE</span>
-            </a>
-            {/* Tombol untuk Toggle Menu pada Mobile */}
-            <button
-              type="button"
-              className="lg:hidden text-dark-gray text-2xl"
-              onClick={toggleNavbar}
-            >
-              <i className="fas fa-bars"></i>
-            </button>
-          </div>
-
-          {/* Navbar Menu */}
-          <div
-            className={`fixed right-0 top-0 w-full sm:w-1/2 h-full bg-white shadow-lg pt-[60px] px-5 pb-4 text-center transition-transform transform duration-300 lg:relative lg:flex lg:items-center lg:justify-between lg:w-auto lg:bg-transparent lg:shadow-none ${
-              isNavbarVisible ? "translate-x-0" : "translate-x-full"
-            } lg:translate-x-0`}
+      <header className="fixed top-0 left-0 w-full z-50 transition-all">
+        <motion.nav
+          className={`w-full min-h-[70px] px-6 lg:px-12 flex items-center justify-between shadow-md transition-all duration-300 ${
+            isScrolled ? "bg-white/80 backdrop-blur-md shadow-lg" : "bg-white"
+          }`}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <a
+            href="#"
+            className="text-2xl font-bold uppercase tracking-tight text-gray-900"
           >
-            <button
-              type="button"
-              className="absolute top-5 right-5 lg:hidden text-2xl text-dark-gray"
-              onClick={toggleNavbar}
-            >
-              <i className="fa-solid fa-xmark"></i>
-            </button>
+            <img
+              src={LogoLarge}
+              alt="Career The Explorer Logo"
+              className="hidden lg:inline h-24"
+            />
+            <img src={Logo} alt="CTE Logo" className="lg:hidden h-10" />
+          </a>
 
-            <ul className="flex flex-col pb-7 lg:flex-row lg:space-x-8 text-dark-gray">
-              <li className="py-2 lg:py-0">
-                <a
-                  href=""
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
+          <button className="lg:hidden text-gray-900" onClick={toggleNavbar}>
+            {isNavbarVisible ? (
+              <i className="fas fa-times text-2xl"></i>
+            ) : (
+              <i className="fas fa-bars text-2xl"></i>
+            )}
+          </button>
+
+          <AnimatePresence>
+            {isNavbarVisible && (
+              <motion.div
+                className="fixed inset-0 bg-white/90 backdrop-blur-md flex flex-col items-center justify-center z-50 lg:hidden"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ duration: 0.3 }}
+              >
+                <button
+                  className="absolute top-5 right-5 text-gray-900"
+                  onClick={toggleNavbar}
                 >
-                  Home
-                </a>
-              </li>
-              <li className="py-2 lg:py-0">
-                <a
-                  href="#features"
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
-                >
-                  Features
-                </a>
-              </li>
-              <li className="py-2 lg:py-0">
-                <a
-                  href=""
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
-                >
-                  Visi & Misi
-                </a>
-              </li>
-              <li className="py-2 lg:py-0">
-                <a
-                  href="#"
-                  className="text-lg font-semibold tracking-wider uppercase transition-colors duration-300 hover:text-orange-500"
-                >
-                  Test
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+                  <i className="fas fa-times text-2xl"></i>
+                </button>
+                <ul className="space-y-6 text-lg font-semibold">
+                  <li>
+                    <a href="#" className="hover:text-orange-500">
+                      Beranda
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#features" className="hover:text-orange-500">
+                      Tentang Psikotest 
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#visi-misi" className="hover:text-orange-500">
+                      Visi & Misi
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#contact" className="hover:text-orange-500">
+                      Contact
+                    </a>
+                  </li>
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <ul className="hidden lg:flex space-x-8 text-lg font-semibold text-gray-900">
+            <li>
+              <a href="#" className="hover:text-orange-500">
+                Beranda
+              </a>
+            </li>
+            <li>
+              <a href="#features" className="hover:text-orange-500">
+                Tentang Psikotest 
+              </a>
+            </li>
+            <li>
+              <a href="#visi-misi" className="hover:text-orange-500">
+                Visi & Misi
+              </a>
+            </li>
+            <li>
+              <a href="#contact" className="hover:text-orange-500">
+                Contact
+              </a>
+            </li>
+          </ul>
+        </motion.nav>
+      </header>
 
       {/* Header */}
       <section className="text-gray-800 body-font bg-amber-100 pt-[70px] relative overflow-hidden">
+        {/* Dekorasi Latar */}
+        <div className="absolute top-0 left-0 w-40 h-40 bg-orange-400 rounded-full opacity-30 blur-2xl"></div>
+        <div className="absolute bottom-0 right-0 w-40 h-40 bg-orange-300 rounded-full opacity-30 blur-2xl"></div>
+
         <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center relative z-10">
           <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <h1 className="title-font sm:text-4xl text-5xl mb-4 font-bold text-gray-900">
+            <motion.h1
+              className="title-font sm:text-4xl text-5xl mb-6 font-bold text-gray-900"
+              initial={{ opacity: 0, y: -50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
               Temukan Potensi Karier Terbaikmu
-            </h1>
-            <p className="text-lg max-w-xl mb-8 text-gray-800">
+            </motion.h1>
+
+            <motion.p
+              className="text-lg max-w-xl mb-8 text-gray-800 text-justify"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
               "Career The Explorer" adalah platform inovatif yang dirancang
-              untuk membantu Anda mengeksplorasi potensi karier terbaik melalui
-              tes psikologi.
-            </p>
-            <div className="flex justify-center">
+              untuk membantu Anda menemukan dan mengeksplorasi potensi karier
+              terbaik. Dengan tes psikologi berbasis sains, kami memberikan
+              wawasan mendalam dan akurat, sehingga Anda dapat merancang masa
+              depan profesional dengan lebih percaya diri dan terarah.✨🚀
+            </motion.p>
+
+            <motion.div
+              className="flex justify-center"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+            >
               <button
                 type="button"
-                className="inline-flex text-white bg-orange-600 border-0 py-3 px-8 rounded-full font-semibold hover:bg-orange-500 transition duration-300 text-lg"
+                className="inline-flex text-white bg-orange-600 border-0 py-3 px-8 rounded-full font-semibold hover:bg-orange-500 transition duration-300 text-lg shadow-lg hover:shadow-xl"
                 onClick={() => navigate("/peserta")}
               >
                 <span>Mulai Tes Sekarang</span>
               </button>
-            </div>
+            </motion.div>
           </div>
-          <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+          <motion.div
+            className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+          >
             <img
               className="object-cover object-center rounded"
               alt="hero"
               src={LogoUnesa}
             />
-          </div>
+          </motion.div>
         </div>
       </section>
     </header>

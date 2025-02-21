@@ -2,91 +2,97 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBrain,
-  faClipboardList,
   faUserCog,
-  faClock,
+  faChartLine,
+  faLightbulb,
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Banner() {
   return (
     <div id="features" className="bg-gray-300">
-      <section className="py-16 bg-gradient-to-b from-amber-100 to-orange-500">
-        <div className="container">
-          <div className="join-title text-center py-5 text-orange-600">
-            <h1>
-              Career The Explorer{" "}
-              <span className="text-orange-400">Psychotests</span>
+      <section className="py-16 bg-gradient-to-b from-amber-100 to-amber-500">
+        <div className="container mx-auto px-6">
+          <div className="join-title text-center py-5 text-amber-800">
+            <h1 className="font-bold">
+              Pentingnya <span className="text-amber-600">Psikotes</span>
             </h1>
-            <div className="line bg-orange-300"></div>
+            <div className="line bg-amber-400 w-24 h-1 mx-auto mt-2"></div>
           </div>
 
-          <div className="game-card-list grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 id: 1,
-                title: "Cognitive Ability Test",
+                title: "Mengukur Kecerdasan",
                 description:
-                  "Tes ini mengukur kemampuan kognitif, termasuk pemecahan masalah, kecepatan berpikir, dan kemampuan untuk belajar hal-hal baru.",
-                features: [
-                  "Problem-solving skills",
-                  "Quick thinking",
-                  "Learning ability",
-                ],
+                  "Psikotes membantu menilai kemampuan intelektual seseorang, seperti pemecahan masalah, logika, dan daya ingat.",
+                features: ["Problem-solving", "Logical reasoning", "Memory"],
                 icon: faBrain,
               },
               {
                 id: 2,
-                title: "Personality Test",
+                title: "Menilai Kepribadian",
                 description:
-                  "Tes ini mengevaluasi kepribadian Anda, memberi gambaran mengenai sifat, preferensi, dan kecenderungan pribadi Anda dalam konteks pekerjaan.",
+                  "Tes ini memberikan gambaran tentang sifat individu, pola perilaku, serta bagaimana seseorang berinteraksi dengan lingkungan.",
                 features: [
-                  "Personality traits",
-                  "Behavioral tendencies",
-                  "Career preferences",
+                  "Sifat individu",
+                  "Perilaku sosial",
+                  "Kecocokan pekerjaan",
                 ],
                 icon: faUserCog,
               },
-            ].map((test) => (
+              {
+                id: 3,
+                title: "Menentukan Potensi Karier",
+                description:
+                  "Psikotes dapat membantu menentukan jalur karier yang sesuai berdasarkan kemampuan dan minat seseorang.",
+                features: [
+                  "Analisis minat",
+                  "Kecocokan pekerjaan",
+                  "Perencanaan karier",
+                ],
+                icon: faChartLine,
+              },
+              {
+                id: 4,
+                title: "Mengasah Kreativitas",
+                description:
+                  "Beberapa tes psikologi mengukur kreativitas dan kemampuan berpikir out-of-the-box dalam menyelesaikan masalah.",
+                features: [
+                  "Pemikiran inovatif",
+                  "Kreativitas",
+                  "Problem-solving",
+                ],
+                icon: faLightbulb,
+              },
+            ].map((info) => (
               <div
-                className="game-card rounded-lg bg-orange-100 shadow-md"
-                key={test.id}
+                className="game-card rounded-lg bg-amber-100 shadow-lg p-6 transform transition duration-300 hover:scale-105"
+                key={info.id}
               >
-                <div className="game-card-top img-fit-cover">
-                  <div className="icon-container text-center py-10">
+                <div className="flex justify-center">
+                  <div className="icon-container w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-md">
                     <FontAwesomeIcon
-                      icon={test.icon}
-                      size="3x"
-                      className="text-orange-500"
+                      icon={info.icon}
+                      size="2x"
+                      className="text-amber-600"
                     />
                   </div>
                 </div>
-                <div className="game-card-bottom p-4">
-                  <div className="flex flex-col sm:flex-row justify-between items-start flex-wrap">
-                    <div className="py-1">
-                      <h4 className="text-orange-600 uppercase game-card-title">
-                        {test.title}
-                      </h4>
-                      <p className=" text-orange-800">
-                        {test.description}
-                      </p>
-                    </div>
-                    <div className="mt-2 sm:mt-0 py-1 flex gap-1">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-yellow-300">☆</span>
-                    </div>
-                  </div>
-                  <div className="block-wrap flex justify-between items-end">
-                    <div className="details-group">
-                      <p className="font-semibold text-orange-600">Features:</p>
-                      <ul className="text-orange-500 list-disc pl-4">
-                        {test.features.map((feature, index) => (
-                          <li key={index}>{feature}</li>
-                        ))}
-                      </ul>
-                    </div>
+                <div className="game-card-bottom mt-4 text-center">
+                  <h4 className="text-amber-800 text-lg font-semibold">
+                    {info.title}
+                  </h4>
+                  <p className="text-amber-900 text-sm mt-2">
+                    {info.description}
+                  </p>
+                  <div className="mt-3">
+                    <p className="font-semibold text-amber-700">Manfaat:</p>
+                    <ul className="text-amber-600 list-disc pl-4 text-sm">
+                      {info.features.map((feature, index) => (
+                        <li key={index}>{feature}</li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>

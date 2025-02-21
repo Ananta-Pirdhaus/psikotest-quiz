@@ -5,10 +5,11 @@
 @import "tailwindcss/utilities";
 @import "./styles/buttons.css";
 @import "./styles/helper.css";
-/* @import "./styles/header.css"; */
-/* @import "./styles/nav.css"; */
 @import "./styles/slider.css";
-/* @import "./styles/footer.css"; */
+
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   @apply text-base leading-[1.6] font-barlow text-dark-gray bg-light-gray;
@@ -68,7 +69,7 @@ ul {
 /* Game Card Component */
 /* Game Card Component */
 .game-card {
-  @apply flex flex-col rounded-none border-dashed border-2 border-gray-400; /* Menambahkan border-dashed pada game card */
+  @apply flex flex-col rounded-lg border-dashed border-2 border-gray-700; /* Menambahkan border-dashed pada game card */
 }
 
 .game-card .game-card-top {
@@ -94,7 +95,7 @@ ul {
 }
 
 .game-card .game-card-bottom {
-  @apply flex-1 bg-amber-100 py-5 px-[18px] border-dashed border-2 border-gray-400; /* Menambahkan border-dashed pada bagian bawah */
+  @apply flex-1 bg-amber-100 py-5 px-[18px]  border-gray-400; /* Menambahkan border-dashed pada bagian bawah */
 }
 
 /* Game Card Title - Tanpa Border */

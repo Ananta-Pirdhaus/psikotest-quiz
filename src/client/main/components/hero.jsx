@@ -1,11 +1,14 @@
 import React from "react";
-import LogoUnesa from "../../../common/logo-unesa.png";
+import LogoUnesa from "../../../assets/logo_large.png";
 
 export default function VisiMisi() {
   return (
-    <section className="py-16 bg-gradient-to-t from-amber-100 to-orange-200">
+    <section
+      className="py-16 bg-gradient-to-t from-amber-100 to-amber-200"
+      id="visi-misi"
+    >
       <div className="container">
-        <div className="join-title text-center  py-5 text-orange-800">
+        <div className="join-title text-center  py-5 text-amber-800">
           <h3>
             Visi dan <span className="">Misi</span>
           </h3>
@@ -23,7 +26,7 @@ export default function VisiMisi() {
 
           {/* Bagian kanan (visi dan misi) */}
           <div className="w-full md:w-1/2">
-            <div className="p-4 bg-white shadow-lg rounded-lg border-dashed border-2 border-gray-400">
+            <div className="p-4 bg-white shadow-lg rounded-lg border-dashed border-2 border-gray-700">
               <h4 className="text-2xl font-bold mb-4">Visi</h4>
               <p className="text-lg">
                 Menjadi platform terpercaya yang membantu individu dalam
@@ -33,7 +36,7 @@ export default function VisiMisi() {
               </p>
             </div>
 
-            <div className="p-4 bg-white shadow-lg rounded-lg mt-8 border-dashed border-2 border-gray-400">
+            <div className="p-4 bg-white shadow-lg rounded-lg mt-8 border-dashed border-2 border-gray-700">
               <h4 className="text-2xl font-bold mb-4">Misi</h4>
               <p className="text-lg">
                 1. Menyediakan layanan tes psikologi yang terstandarisasi dan

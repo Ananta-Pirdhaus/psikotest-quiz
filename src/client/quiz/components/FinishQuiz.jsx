@@ -62,7 +62,7 @@ const ThankYouCard = () => {
             <h1 className="text-3xl font-extrabold text-gray-800 mb-4">
               Terima Kasih!
             </h1>
-            <p className="text-gray-700 leading-relaxed mb-6">
+            <p className="text-gray-700 leading-relaxed mb-4">
               Anda telah berhasil menyelesaikan survei dan melaksanakan
               <span className="font-semibold">
                 {" "}
@@ -70,6 +70,14 @@ const ThankYouCard = () => {
               </span>
               . Semoga pengalaman ini memberikan wawasan baru bagi Anda.
             </p>
+
+            {/* Pesan tambahan tentang email survei */}
+            <p className="text-red-500 font-medium mb-6">
+              📩 Link untuk survei dan hasil quiz telah dikirim ke email Anda.
+              Jangan lupa untuk mengisi survei terlebih dahulu sebelum melihat
+              hasilnya! 😊
+            </p>
+
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
