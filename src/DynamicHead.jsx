@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 
-const DynamicHead = () => {
+const DynamicHead = ({ noIndex = false }) => {
   const [metaData, setMetaData] = useState({
     title: "Dashboard Career The Explorer",
     description: "Loading...",
@@ -15,7 +15,7 @@ const DynamicHead = () => {
   });
 
   useEffect(() => {
-    const API_URL = `${import.meta.env.VITE_BASE_URL}setting`; // Menggunakan env + path "setting"
+    const API_URL = `${import.meta.env.VITE_BASE_URL}setting`;
 
     fetch(API_URL)
       .then((res) => res.json())
@@ -24,7 +24,7 @@ const DynamicHead = () => {
           setMetaData({
             title: data.data.title || "Default Title",
             description: data.data.description || "Default Description",
-            keywords: data.data.keywords || "Default Description",
+            keywords: data.data.keywords || "Default Keywords",
             icon: data.data.icon || "",
             author: data.data.author || "Unknown Author",
             contact: {
@@ -38,19 +38,20 @@ const DynamicHead = () => {
       .catch((error) => console.error("Error fetching meta:", error));
   }, []);
 
-  useEffect(() => {
-    console.log("Updated metaData:", metaData);
-  }, [metaData]);
-
   return (
     <Helmet>
       {/* Title & Description */}
       <title>{metaData.title}</title>
       <meta name="description" content={metaData.description} />
+
+      {/* SEO Control: Noindex for non-home pages */}
+      {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
       {/* Favicon */}
       {metaData.icon && (
         <link rel="icon" type="image/svg+xml" href={metaData.icon} />
       )}
+
       {/* Author Metadata */}
       <meta name="keywords" content={metaData.keywords} />
       <meta name="author" content={metaData.author} />

@@ -8,7 +8,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // Lazy load pages
 const HomePage = lazy(() => import("./client/main/pages/main"));
 const TestPage = lazy(() => import("./client/quiz/pages/test"));
-const LoginPage = lazy(() => import("./client/auth/login"));
 const UserPage = lazy(() => import("./client/users/index"));
 const SurveyPage = lazy(() => import("./client/survei/index"));
 const FinishQuizPage = lazy(() => import("./client/quiz/pages/finishTest"));
@@ -17,17 +16,66 @@ const ResultQuizPage = lazy(() => import("./client/quiz/result/index"));
 export default function App() {
   return (
     <HelmetProvider>
-      <DynamicHead />
       <Router>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/test/:sessionId" element={<TestPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/peserta" element={<UserPage />} />
-          <Route path="/finish-quiz" element={<FinishQuizPage />} />
-          <Route path="/survey/:sessionId" element={<SurveyPage />} />
-          <Route path="/hasil-quiz/:idSession" element={<ResultQuizPage />} />
+          {/* Halaman Home - Dapat Diindeks */}
+          <Route
+            path="/"
+            element={
+              <>
+                <DynamicHead />
+                <HomePage />
+              </>
+            }
+          />
+
+          {/* Halaman lain - Tidak Diindeks */}
+          <Route
+            path="/test/:sessionId"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <TestPage />
+              </>
+            }
+          />
+          <Route
+            path="/peserta"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <UserPage />
+              </>
+            }
+          />
+          <Route
+            path="/finish-quiz"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <FinishQuizPage />
+              </>
+            }
+          />
+          <Route
+            path="/survey/:sessionId"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <SurveyPage />
+              </>
+            }
+          />
+          <Route
+            path="/hasil-quiz/:idSession"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <ResultQuizPage />
+              </>
+            }
+          />
         </Routes>
       </Router>
     </HelmetProvider>
