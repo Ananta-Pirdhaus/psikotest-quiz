@@ -1,10 +1,10 @@
 import React from "react";
-import FinishQuiz from "../components/finishQuiz";
+import FinishQuiz from "../components/FinishQuiz";
 
 export default function TestPage() {
   return (
     <React.Fragment>
-      <FinishQuiz/>
+      <FinishQuiz />
     </React.Fragment>
   );
 }
