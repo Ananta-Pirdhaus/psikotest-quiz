@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight } from "@fortawesome/free-solid-svg-icons";
+import { faAnglesLeft, faAnglesRight, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../../assets/logo.png";
 import LogoUnesa from "../../../assets/logo-unesa.jpg";
 import SaveJawaban from "./SaveJawaban";
@@ -96,42 +96,54 @@ const QuestionCard = ({
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl p-4 bg-white border border-gray-200 rounded-md shadow sm:p-8">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex space-x-2">
-            <img src={Logo} alt="Logo" className="w-16 h-16 rounded-xl" />
+        <div className="flex flex-col sm:flex-row items-center justify-between mb-4 gap-4">
+          {/* Logo Section */}
+          <div className="flex space-x-2 items-center">
+            <img
+              src={Logo}
+              alt="Logo"
+              className="w-14 sm:w-16 h-14 sm:h-16 rounded-xl"
+            />
             <img
               src={LogoUnesa}
               alt="Logo Unesa"
-              className="w-16 h-16 rounded-xl"
+              className="w-14 sm:w-16 h-14 sm:h-16 rounded-xl"
             />
           </div>
-          <div className="w-full flex flex-col items-end justify-end h-32">
+
+          {/* Quiz Info & Progress Section */}
+          <div className="w-full flex flex-col items-center sm:items-end justify-end h-auto sm:h-32 text-center sm:text-right">
             <div className="mb-2">
-              <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-blue-600 bg-blue-200">
+              <span className="text-sm font-semibold py-1 px-3 uppercase rounded-full text-blue-600 bg-blue-200">
                 Quiz Type: {quizType}
               </span>
             </div>
-            <div className="relative w-1/2">
+
+            {/* Progress Bar */}
+            <div className="relative w-full sm:w-1/2">
               <div className="flex mb-2 items-center justify-between">
-                <span className="text-sm font-semibold inline-block py-1 px-2 uppercase rounded-full text-orange-600 bg-orange-200">
+                <span className="text-xs sm:text-sm font-semibold py-1 px-2 uppercase rounded-full text-orange-600 bg-orange-200">
                   Progress
                 </span>
-                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-orange-600 bg-orange-200">
+                <span className="text-xs sm:text-sm font-semibold py-1 px-2 uppercase rounded-full text-orange-600 bg-orange-200">
                   {Math.round(progressPercentage)}%
                 </span>
               </div>
-              <div className="w-full bg-gray-300 rounded-full h-2 sm:h-4">
+              <div className="w-full bg-gray-300 rounded-full h-2 sm:h-3">
                 <div
-                  className="bg-orange-500 h-2 sm:h-4 rounded-full"
+                  className="bg-orange-500 h-2 sm:h-3 rounded-full transition-all duration-300"
                   style={{ width: `${progressPercentage}%` }}
                 ></div>
               </div>
             </div>
-            <h2 className="text-xl font-bold leading-none text-gray-900 mt-4">
+
+            {/* Question Indicator */}
+            <h2 className="text-lg sm:text-xl font-bold leading-none text-gray-900 mt-3 sm:mt-4">
               Question {currentPage} of {totalQuestions}
             </h2>
           </div>
         </div>
+
         <div className="flow-root">
           <hr className="border-gray-200 sm:mx-auto" />
           <div className="px-4">
@@ -157,11 +169,11 @@ const QuestionCard = ({
                 </button>
               );
             })}
-            <div className="flex justify-center p-4">
+            <div className="flex flex-wrap justify-center gap-4 p-4">
               {/* Previous Button */}
               <button
                 onClick={handlePrevQuestion}
-                className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mr-6 mb-2"
+                className="flex items-center gap-2 text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 font-medium rounded-md text-md px-5 py-2.5"
               >
                 <FontAwesomeIcon icon={faAnglesLeft} /> Sebelumnya
               </button>
@@ -170,14 +182,15 @@ const QuestionCard = ({
               {quizType === "Single" && isLastQuestionAnswered ? (
                 <button
                   onClick={handleSwitchQuizType}
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md text-md px-5 py-2.5 mb-2"
+                  className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 transition-all duration-300 text-white font-medium rounded-md text-md px-5 py-2.5"
                 >
-                  Switch to {quizType === "Single" ? "Multiple" : "Single"} Type
+                  <FontAwesomeIcon icon={faExchangeAlt} /> Switch to{" "}
+                  {quizType === "Single" ? "Multiple" : "Single"} Type
                 </button>
               ) : (
                 <button
                   onClick={handleNextQuestion}
-                  className="text-white bg-yellow-500 hover:bg-yellow-600 font-medium rounded-md text-md px-5 py-2.5 mb-2"
+                  className="flex items-center gap-2 text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 font-medium rounded-md text-md px-5 py-2.5"
                 >
                   Selanjutnya <FontAwesomeIcon icon={faAnglesRight} />
                 </button>
