@@ -59,7 +59,7 @@ export default function App() {
             }
           />
           <Route
-            path="/survey/:sessionId"
+            path="/survei/:sessionId"
             element={
               <>
                 <DynamicHead noIndex />
