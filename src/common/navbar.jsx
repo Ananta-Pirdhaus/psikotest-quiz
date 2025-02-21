@@ -33,7 +33,9 @@ export default function Header() {
       <header className="fixed top-0 left-0 w-full z-50 transition-all">
         <motion.nav
           className={`w-full min-h-[70px] px-6 lg:px-12 flex items-center justify-between shadow-md transition-all duration-300 ${
-            isScrolled ? "bg-white/80 backdrop-blur-md shadow-lg" : "bg-white"
+            isScrolled || isNavbarVisible
+              ? "bg-white/80 backdrop-blur-md shadow-lg"
+              : "bg-white"
           }`}
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -76,22 +78,38 @@ export default function Header() {
                 </button>
                 <ul className="space-y-6 text-lg font-semibold">
                   <li>
-                    <a href="#" className="hover:text-orange-500" onClick={toggleNavbar}>
+                    <a
+                      href="#"
+                      className="hover:text-orange-500"
+                      onClick={toggleNavbar}
+                    >
                       Beranda
                     </a>
                   </li>
                   <li>
-                    <a href="#features" className="hover:text-orange-500" onClick={toggleNavbar}>
-                      Tentang Psikotest 
+                    <a
+                      href="#features"
+                      className="hover:text-orange-500"
+                      onClick={toggleNavbar}
+                    >
+                      Tentang Psikotest
                     </a>
                   </li>
                   <li>
-                    <a href="#visi-misi" className="hover:text-orange-500" onClick={toggleNavbar}>
+                    <a
+                      href="#visi-misi"
+                      className="hover:text-orange-500"
+                      onClick={toggleNavbar}
+                    >
                       Visi & Misi
                     </a>
                   </li>
                   <li>
-                    <a href="#contact" className="hover:text-orange-500" onClick={toggleNavbar}>
+                    <a
+                      href="#contact"
+                      className="hover:text-orange-500"
+                      onClick={toggleNavbar}
+                    >
                       Kontak
                     </a>
                   </li>
@@ -102,22 +120,22 @@ export default function Header() {
 
           <ul className="hidden lg:flex space-x-8 text-lg font-semibold text-gray-900">
             <li>
-              <a href="#" className="hover:text-orange-500" onClick={toggleNavbar}>
+              <a href="#" className="hover:text-orange-500">
                 Beranda
               </a>
             </li>
             <li>
-              <a href="#features" className="hover:text-orange-500" onClick={toggleNavbar}>
-                Tentang Psikotest 
+              <a href="#features" className="hover:text-orange-500">
+                Tentang Psikotest
               </a>
             </li>
             <li>
-              <a href="#visi-misi" className="hover:text-orange-500" onClick={toggleNavbar}>
+              <a href="#visi-misi" className="hover:text-orange-500">
                 Visi & Misi
               </a>
             </li>
             <li>
-              <a href="#contact" className="hover:text-orange-500" onClick={toggleNavbar}>
+              <a href="#contact" className="hover:text-orange-500">
                 Kontak
               </a>
             </li>
