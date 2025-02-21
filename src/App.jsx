@@ -1,6 +1,8 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./scroll-to-top";
+import DynamicHead from "./DynamicHead";
+import { HelmetProvider } from "react-helmet-async";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Lazy load pages
@@ -14,17 +16,20 @@ const ResultQuizPage = lazy(() => import("./client/quiz/result/index"));
 
 export default function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/test/:sessionId" element={<TestPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/peserta" element={<UserPage />} />
-        <Route path="/finish-quiz" element={<FinishQuizPage />} />
-        <Route path="/survey/:sessionId" element={<SurveyPage />} />
-        <Route path="/hasil-quiz/:idSession" element={<ResultQuizPage />} />
-      </Routes>
-    </Router>
+    <HelmetProvider>
+      <DynamicHead />
+      <Router>
+        <ScrollToTop />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/test/:sessionId" element={<TestPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/peserta" element={<UserPage />} />
+          <Route path="/finish-quiz" element={<FinishQuizPage />} />
+          <Route path="/survey/:sessionId" element={<SurveyPage />} />
+          <Route path="/hasil-quiz/:idSession" element={<ResultQuizPage />} />
+        </Routes>
+      </Router>
+    </HelmetProvider>
   );
 }
