@@ -12,6 +12,7 @@ const UserPage = lazy(() => import("./client/users/index"));
 const SurveyPage = lazy(() => import("./client/survei/index"));
 const FinishQuizPage = lazy(() => import("./client/quiz/pages/finishTest"));
 const ResultQuizPage = lazy(() => import("./client/quiz/result/index"));
+const NotFoundPage = lazy(() => import("./common/NotFoundPage"));
 
 export default function App() {
   return (
@@ -73,6 +74,15 @@ export default function App() {
               <>
                 <DynamicHead noIndex />
                 <ResultQuizPage />
+              </>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <>
+                <DynamicHead noIndex />
+                <NotFoundPage />
               </>
             }
           />

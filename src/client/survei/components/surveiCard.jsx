@@ -69,16 +69,22 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-white shadow-lg rounded-2xl">
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+      <h1 className="text-2xl font-bold text-center text-gray-900 mb-6">
+        Survei Peserta
+      </h1>
       {questions.map((question) => {
         const surveyType = question.type;
 
         return (
-          <div key={question.id} className="mb-6">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+          <div
+            key={question.id}
+            className="mb-6 p-4 bg-gray-50 rounded-lg shadow-sm"
+          >
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3">
               {/* Left side: Question */}
-              <div className="flex-1 pr-4 mb-4 sm:mb-0">
-                <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 break-words">
+              <div className="flex-1 pr-3 mb-3 sm:mb-0">
+                <h2 className="text-lg font-bold text-gray-900 break-words">
                   {question.question}
                 </h2>
               </div>
@@ -86,7 +92,9 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
               {/* Right side: Answer Options */}
               {surveyType === "Scale" && (
                 <div className="flex flex-col items-center space-y-2 w-full sm:w-1/2">
-                  <p className="text-lg text-gray-700">Pilih jawaban Anda:</p>
+                  <p className="text-md text-gray-700 font-medium">
+                    Pilih jawaban Anda:
+                  </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 w-full">
                     {[
                       "Sangat Setuju",
@@ -96,11 +104,13 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
                     ].map((option) => (
                       <button
                         key={option}
-                        className={`w-full h-16 py-2 px-6 rounded-lg text-white font-semibold transition-all duration-200 transform ${
+                        className={`w-full h-13 p-2 rounded-lg text-white font-semibold transition-all duration-200 transform 
+                        ${
                           answers[question.id].selectedAnswer === option
-                            ? "bg-yellow-600 shadow-lg"
-                            : "bg-orange-500 hover:bg-orange-600"
-                        }`}
+                            ? "bg-amber-600 shadow-md scale-105"
+                            : "bg-amber-500 hover:bg-amber-700 hover:scale-105"
+                        }
+                      `}
                         onClick={() =>
                           handleScaleSelection(question.id, option)
                         }
@@ -115,11 +125,13 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
 
             {/* Display a textarea if surveyType is 'Text' */}
             {surveyType === "Text" && (
-              <div className="mt-4">
-                <p className="text-lg text-gray-700">Tulis jawaban Anda:</p>
+              <div className="mt-3">
+                <p className="text-md text-gray-700 font-medium">
+                  Tulis jawaban Anda:
+                </p>
                 <textarea
-                  className="w-full p-4 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-                  rows="4"
+                  className="w-full p-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  rows="3"
                   placeholder="Tulis jawaban di sini..."
                   value={answers[question.id].textAnswer}
                   onChange={(e) => handleTextChange(question.id, e)}
@@ -131,9 +143,9 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
       })}
 
       {/* Save Answer Button at the bottom */}
-      <div className="mt-6 text-center">
+      <div className="mt-5 text-center">
         <button
-          className="py-2 px-6 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 transition-all duration-300"
+          className="py-2 px-6 bg-amber-600 text-white text-md font-semibold rounded-lg hover:bg-amber-700 transition-all duration-300 shadow-md hover:shadow-lg"
           onClick={handleSaveAnswers}
           disabled={loading}
         >
@@ -143,14 +155,14 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
 
       {/* Error message */}
       {error && (
-        <div className="text-center text-red-500 mt-4">
+        <div className="text-center text-red-500 mt-3 font-medium">
           <p>{error}</p>
         </div>
       )}
 
       {/* Success message */}
       {successMessage && !loading && (
-        <div className="text-center text-green-500 mt-4">
+        <div className="text-center text-green-600 mt-3 font-medium">
           <p>{successMessage}</p>
         </div>
       )}
