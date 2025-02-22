@@ -119,61 +119,6 @@ export default function Header() {
         </ul>
       </motion.nav>
 
-      {/* Header Section */}
-      <section className="pt-[90px] text-gray-800 body-font bg-amber-100 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-40 h-40 bg-orange-400 rounded-full opacity-30 blur-2xl"></div>
-        <div className="absolute bottom-0 right-0 w-40 h-40 bg-orange-300 rounded-full opacity-30 blur-2xl"></div>
-
-        <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center relative z-10">
-          <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
-            <motion.h1
-              className="title-font sm:text-4xl text-5xl mb-6 font-bold text-gray-900"
-              initial={{ opacity: 0, y: -50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              Temukan Potensi Karier Terbaikmu
-            </motion.h1>
-            <motion.p
-              className="text-lg max-w-xl mb-8 text-gray-800 text-justify"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.8 }}
-            >
-              "Career The Explorer" adalah platform inovatif yang dirancang
-              untuk membantu Anda menemukan dan mengeksplorasi potensi karier
-              terbaik...
-            </motion.p>
-            <motion.div
-              className="flex justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-            >
-              <button
-                type="button"
-                className="inline-flex text-white bg-orange-600 border-0 py-3 px-8 rounded-full font-semibold hover:bg-orange-500 transition duration-300 text-lg shadow-lg hover:shadow-xl"
-                onClick={() => navigate("/peserta")}
-              >
-                <span>Mulai Tes Sekarang</span>
-              </button>
-            </motion.div>
-          </div>
-          <motion.div
-            className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-          >
-            <img
-              className="object-cover object-center rounded"
-              alt="hero"
-              src={LogoUnesa}
-            />
-          </motion.div>
-        </div>
-      </section>
-
       {/* Header */}
       <section className="text-gray-800 body-font bg-amber-100 pt-[70px] relative overflow-hidden">
         {/* Dekorasi Latar */}
