@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAnglesLeft, faAnglesRight, faExchangeAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAnglesLeft,
+  faAnglesRight,
+  faExchangeAlt,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../../assets/logo.png";
 import LogoUnesa from "../../../assets/logo-unesa.jpg";
 import SaveJawaban from "./SaveJawaban";
@@ -161,9 +166,9 @@ const QuestionCard = ({
                   onClick={() => handleAnswerClick(answerOption.id)}
                   className={`w-full text-left font-semibold text-gray-900 ${
                     isSelected
-                      ? "bg-yellow-100 border border-yellow-400"
-                      : "border border-orange-600 hover:bg-orange-600"
-                  } focus:outline-none hover:bg-yellow-200 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
+                      ? "bg-yellow-300 border border-yellow-400"
+                      : "border border-orange-600 hover:bg-orange-500"
+                  } focus:outline-none hover:bg-yellow-300 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
                 >
                   {answerOption.answer}
                 </button>
@@ -203,10 +208,23 @@ const QuestionCard = ({
           {quizType === "Multiple" && isLastQuestionAnswered && (
             <button
               onClick={handleSubmitAnswers}
-              className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-7 py-2.5 mr-6 mb-2"
+              className="flex items-center gap-2 text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-7 py-2.5 mr-6 mb-2"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit All Answers"}
+              {isSubmitting ? (
+                <>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    className="animate-spin"
+                  />
+                  Submitting...
+                </>
+              ) : (
+                <>
+                  <FontAwesomeIcon icon={faPaperPlane} />
+                  Submit All Answers
+                </>
+              )}
             </button>
           )}
         </div>
