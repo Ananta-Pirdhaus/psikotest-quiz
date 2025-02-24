@@ -6,11 +6,16 @@ const DynamicHead = ({ noIndex = false }) => {
     title: "Dashboard Career The Explorer",
     description: "Loading...",
     icon: "",
+    favicon: "",
     author: "",
     contact: {
       email: "",
       phone: "",
       address: "",
+    },
+    seo: {
+      google_analytics: "",
+      bing_webmaster: "",
     },
   });
 
@@ -26,11 +31,17 @@ const DynamicHead = ({ noIndex = false }) => {
             description: data.data.description || "Default Description",
             keywords: data.data.keywords || "Default Keywords",
             icon: data.data.icon || "",
+            favicon: data.data.favicon || "",
             author: data.data.author || "Unknown Author",
             contact: {
               email: data.data.contact?.email || "No Email",
               phone: data.data.contact?.phone || "No Phone",
               address: data.data.contact?.address || "No Address",
+            },
+            seo: {
+              google_analytics:
+                data.data.seo?.google_analytics || "No Google Analytics",
+              phone: data.data.seo?.bing_webmaster || "No bing webmaster",
             },
           });
         }
@@ -52,6 +63,8 @@ const DynamicHead = ({ noIndex = false }) => {
         <link rel="icon" type="image/svg+xml" href={metaData.icon} />
       )}
 
+      <link rel="icon" type="image/png" href={metaData.favicon} />
+
       {/* Author Metadata */}
       <meta name="keywords" content={metaData.keywords} />
       <meta name="author" content={metaData.author} />
@@ -60,6 +73,12 @@ const DynamicHead = ({ noIndex = false }) => {
       <meta name="contact:email" content={metaData.contact.email} />
       <meta name="contact:phone" content={metaData.contact.phone} />
       <meta name="contact:address" content={metaData.contact.address} />
+
+      <meta
+        name="google-site-verification"
+        content={metaData.seo.google_analytics}
+      />
+      <meta name="msvalidate.01" content={metaData.seo.bing_webmaster} />
     </Helmet>
   );
 };
