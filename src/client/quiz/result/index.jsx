@@ -32,7 +32,7 @@ export default function ResultQuizApp() {
         if (!fetchedResult) {
           toast.error("Tidak ada data hasil kuis yang tersedia.");
           setTimeout(() => {
-            navigate(`/survey/${idSession}`); // Redirect ke halaman survey
+            navigate(`/survei/${idSession}`); // Redirect ke halaman survey
           }, 2000); // Delay 2 detik agar user melihat pesan error
         } else {
           setQuizResult(fetchedResult);
