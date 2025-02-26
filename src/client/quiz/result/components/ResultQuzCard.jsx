@@ -240,7 +240,7 @@ const ResultQuizCard = ({ quizResult }) => {
             >
               {expanded === `major-${index}` && (
                 <p className="text-gray-700 p-2 font-semibold">
-                  {item.universities.slice(0, 3).join(", ")}
+                  {item.universities.slice(0, 5).join(", ")}
                 </p>
               )}
             </div>
