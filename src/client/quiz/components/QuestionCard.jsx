@@ -50,22 +50,16 @@ const QuestionCard = ({
     const isMultiple = question.type === "Multiple";
     let updatedAnswers;
 
-    if (Array.isArray(selectedAnswerIDs)) {
-      if (isMultiple) {
-        updatedAnswers = selectedAnswerIDs.includes(id)
-          ? selectedAnswerIDs.filter((answerID) => answerID !== id)
-          : [...selectedAnswerIDs, id];
-      } else {
-        updatedAnswers = id;
-      }
-
-      setSelectedAnswerIDs(updatedAnswers); // Update local state
-      handleAnswerOptionClick(updatedAnswers); // Pass the updated answer back to App.js
+    if (isMultiple) {
+      updatedAnswers = selectedAnswerIDs.includes(id)
+        ? selectedAnswerIDs.filter((answerID) => answerID !== id) // Hapus jika sudah ada
+        : [...selectedAnswerIDs, id]; // Tambah jika belum ada
     } else {
-      updatedAnswers = [id];
-      setSelectedAnswerIDs(updatedAnswers);
-      handleAnswerOptionClick(updatedAnswers);
+      updatedAnswers = [id]; // Hanya satu jawaban diperbolehkan
     }
+
+    setSelectedAnswerIDs(updatedAnswers);
+    handleAnswerOptionClick(updatedAnswers);
   };
 
   const handleSubmitAnswers = () => {
@@ -156,24 +150,29 @@ const QuestionCard = ({
               {question.question}
             </p>
             {question.options.map((answerOption) => {
-              const isSelected =
-                selectedAnswerIDs?.includes(answerOption.id) ||
-                answeredOptionIds.includes(answerOption.id);
+              const isSelected = selectedAnswerIDs?.includes(answerOption.id);
+              const isPreviouslyAnswered =
+                isAnswered && answeredOptionIds.includes(answerOption.id);
 
               return (
                 <button
                   key={answerOption.id}
                   onClick={() => handleAnswerClick(answerOption.id)}
-                  className={`w-full text-left font-semibold text-gray-900 ${
-                    isSelected
-                      ? "bg-yellow-300 border border-yellow-400"
-                      : "border border-orange-600 hover:bg-orange-500"
-                  } focus:outline-none hover:bg-yellow-300 rounded-md text-base px-5 py-2.5 mr-2 mb-2`}
+                  className={`w-full text-left font-semibold text-gray-900 
+        ${
+          isSelected
+            ? "bg-yellow-400 border-yellow-500"
+            : isPreviouslyAnswered
+            ? "bg-yellow-200 border-yellow-300"
+            : "border border-orange-600 hover:bg-orange-500"
+        }
+        focus:outline-none rounded-md text-base px-5 py-2.5 mr-2 mb-2 transition-all`}
                 >
                   {answerOption.answer}
                 </button>
               );
             })}
+
             <div className="flex flex-wrap justify-center gap-4 p-4">
               {/* Previous Button */}
               <button
