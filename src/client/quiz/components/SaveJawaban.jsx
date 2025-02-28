@@ -27,6 +27,7 @@ const SaveJawaban = ({
         // Cek jika quizType adalah 'multiple', baru periksa jumlah jawaban
         if (quizType === "multiple" && selectedAnswer.length === 3) {
           sendAnswerToServer(selectedAnswer); // Kirim jawaban jika sudah 3
+          updateAnswerToServer(selectedAnswer); // Update jika jawaban sudah ada
         } else if (quizType === "multiple") {
           toast.error("You must select exactly 3 answers for this question.", {
             position: "top-right",
@@ -151,10 +152,10 @@ const SaveJawaban = ({
         });
       })
       .catch(() => {
-        toast.error("Error updating your answer!", {
-          position: "top-right",
-          autoClose: 2500,
-        });
+        // toast.error("Error updating your answer!", {
+        //   position: "top-right",
+        //   autoClose: 2500,
+        // });
       });
   };
 

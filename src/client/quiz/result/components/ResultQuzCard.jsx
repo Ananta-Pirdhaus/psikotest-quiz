@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import DOMPurify from "dompurify";
 
 ChartJS.register(
   CategoryScale,
@@ -35,7 +36,7 @@ const ResultQuizCard = ({ quizResult }) => {
     labels: talent.map((t) => t.name),
     datasets: [
       {
-        label: "Skor Talenta",
+        label: "Skor Bakat Peserta",
         data: talent.map((t) => t.score),
         backgroundColor: [
           "#ff9f40",
@@ -59,7 +60,7 @@ const ResultQuizCard = ({ quizResult }) => {
     plugins: {
       title: {
         display: true,
-        text: "Skor Talenta Peserta",
+        text: "Skor Bakat Peserta",
         font: { size: 18 },
       },
     },
@@ -133,22 +134,22 @@ const ResultQuizCard = ({ quizResult }) => {
       </div>
 
       <div className="mb-6">
-        <h3 className="font-semibold text-orange-600 my-5">
-          <i className="fas fa-lightbulb text-xl text-yellow-500"></i>{" "}
-          Rekomendasi:
+        <h3 className="text-2xl font-bold text-orange-600 flex items-center gap-2 my-6">
+          <i className="fas fa-lightbulb text-2xl text-yellow-500"></i>
+          Penjelasan Karakter Kamu
         </h3>
         {topThreeTalents.map((talentItem, index) => (
           <div
             key={index}
-            className="p-4 mb-4 bg-orange-50 rounded-md hover:bg-orange-100 transition duration-300"
+            className="p-5 mb-5 bg-orange-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             <div className="flex justify-between items-center">
-              <h4 className="text-orange-600 text-xl font-semibold">
+              <h4 className="text-orange-700 text-xl font-semibold">
                 {talentItem.name}
               </h4>
               <button
                 onClick={() => toggleExpand(index)}
-                className="text-orange-600 font-semibold transition duration-200 flex items-center gap-1"
+                className="text-orange-700 font-medium transition duration-300 flex items-center gap-1 hover:text-orange-500"
               >
                 {expanded === index ? (
                   <>
@@ -161,29 +162,38 @@ const ResultQuizCard = ({ quizResult }) => {
                 )}
               </button>
             </div>
-
             <div
-              className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
+              className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${
                 expanded === index
-                  ? "max-h-[400px] opacity-100 overflow-y-auto"
+                  ? "max-h-[600px] opacity-100"
                   : "max-h-0 opacity-0"
               }`}
             >
               {expanded === index && (
-                <div className="p-2">
-                  <p className="text-gray-700">
+                <div className="p-4 bg-white rounded-lg shadow-sm border border-orange-200">
+                  <p className="text-gray-800 font-medium">
                     <strong>Deskripsi Singkat:</strong>{" "}
                     {talentItem.short_description}
                   </p>
-                  <p className="text-gray-700">
-                    <strong>Deskripsi Lengkap:</strong>{" "}
-                    {talentItem.full_description}
+                  <p className="text-gray-800 font-medium mt-3">
+                    <strong>Deskripsi Lengkap:</strong>
                   </p>
+                  <div
+                    className="text-gray-700 mt-2"
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(talentItem.full_description),
+                    }}
+                  />
                   <div className="mt-4">
-                    <p className="text-gray-700">
+                    <p className="text-gray-800 font-medium">
                       <strong>Rekomendasi:</strong>
                     </p>
-                    <p className="text-gray-600">{talentItem.recommendation}</p>
+                    <div
+                      className="text-gray-700 mt-1"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(talentItem.recommendation),
+                      }}
+                    />
                   </div>
                 </div>
               )}
@@ -191,37 +201,37 @@ const ResultQuizCard = ({ quizResult }) => {
           </div>
         ))}
 
-        <h3 className="font-semibold text-orange-600 my-5">
-          <i className="fas fa-briefcase text-xl text-yellow-500"></i> Profesi
-          yang Direkomendasikan:
+        <h3 className="text-2xl font-bold text-orange-600 flex items-center gap-2 mb-6">
+          <i className="fas fa-briefcase text-2xl text-yellow-500"></i> Profesi
+          yang Cocok untuk Kamu
         </h3>
         {profession.map((item, index) => (
           <div
             key={index}
-            className="p-4 mb-4 bg-yellow-50 rounded-md hover:bg-yellow-100 transition duration-300"
+            className="p-5 mb-5 bg-yellow-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
-            <h4 className="text-yellow-600 text-xl font-semibold">
+            <h4 className="text-yellow-700 text-xl font-semibold flex items-center gap-2">
               <i className="fas fa-briefcase"></i> {item.name}
             </h4>
           </div>
         ))}
 
-        <h3 className="font-semibold text-orange-600 my-5">
-          <i className="fas fa-school text-xl text-yellow-500"></i> Jurusan yang
-          Direkomendasikan:
+        <h3 className="text-2xl font-bold text-orange-600 flex items-center gap-2 mt-8 mb-6">
+          <i className="fas fa-school text-2xl text-yellow-500"></i> Jurusan
+          yang Cocok untuk Kamu
         </h3>
         {major.map((item, index) => (
           <div
             key={index}
-            className="p-4 mb-4 bg-orange-50 rounded-md hover:bg-orange-100 transition duration-300"
+            className="p-5 mb-5 bg-orange-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             <div className="flex justify-between items-center">
-              <h4 className="text-orange-600 text-xl font-semibold">
+              <h4 className="text-orange-700 text-xl font-semibold flex items-center gap-2">
                 <i className="fas fa-graduation-cap"></i> {item.name}
               </h4>
               <button
                 onClick={() => toggleExpand(`major-${index}`)}
-                className="text-orange-600 font-semibold transition duration-200 flex items-center gap-1"
+                className="text-orange-700 font-medium transition duration-300 flex items-center gap-1 hover:text-orange-500"
               >
                 {expanded === `major-${index}` ? (
                   <i className="fas fa-minus-circle"></i>
@@ -232,14 +242,14 @@ const ResultQuizCard = ({ quizResult }) => {
             </div>
 
             <div
-              className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
+              className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${
                 expanded === `major-${index}`
-                  ? "max-h-[400px] opacity-100"
+                  ? "max-h-[600px] opacity-100"
                   : "max-h-0 opacity-0"
               }`}
             >
               {expanded === `major-${index}` && (
-                <p className="text-gray-700 p-2 font-semibold">
+                <p className="text-gray-800 p-4 bg-white rounded-lg shadow-sm border border-orange-200 font-medium">
                   {item.universities.slice(0, 5).join(", ")}
                 </p>
               )}

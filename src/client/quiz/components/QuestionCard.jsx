@@ -7,7 +7,7 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from "../../../assets/logo.png";
-import LogoUnesa from "../../../assets/logo-unesa.jpg";
+import LogoUnesa from "../../../common/logo-unesa.png";
 import SaveJawaban from "./SaveJawaban";
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
