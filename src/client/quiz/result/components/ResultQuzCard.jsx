@@ -170,25 +170,53 @@ const ResultQuizCard = ({ quizResult }) => {
               }`}
             >
               {expanded === index && (
-                <div className="p-4 bg-white rounded-lg shadow-sm border border-orange-200">
-                  <p className="text-gray-800 font-medium">
-                    {talentItem.short_description}
-                  </p>
-                  <p className="text-gray-800 font-medium mt-3">
-                    <strong>Penjelasan Bakat Kamu:</strong>
-                  </p>
-                  <div
-                    className="text-gray-700 mt-2"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(talentItem.full_description),
-                    }}
-                  />
-                  <div className="mt-4">
-                    <p className="text-gray-800 font-medium">
-                      <strong>Rekomendasi Bakat Kamu:</strong>
+                <div className="p-6 bg-white rounded-xl shadow-md border border-orange-300 max-h-96 overflow-y-auto">
+                  {/* Container untuk ikon dan judul */}
+                  <div className="flex flex-col items-center text-center">
+                    {/* Ikon Bakat */}
+                    <img
+                      src={talentItem.icon}
+                      alt="Icon Bakat"
+                      className="w-28 h-28 md:w-32 md:h-32 object-contain mb-4"
+                    />
+
+                    {/* Deskripsi Singkat dengan Format Lebih Profesional */}
+                    <p className="text-gray-900 font-semibold text-lg md:text-xl">
+                      {talentItem.short_description
+                        .split(", ")
+                        .map((text, idx, arr) => (
+                          <span key={idx} className="inline-flex items-center">
+                            {text}
+                            {idx < arr.length - 1 && (
+                              <span className="mx-2 text-orange-600 text-xl md:text-2xl font-bold">
+                                |
+                              </span>
+                            )}
+                          </span>
+                        ))}
+                    </p>
+                  </div>
+
+                  {/* Penjelasan Bakat */}
+                  <div className="mt-5">
+                    <p className="text-gray-800 font-semibold text-lg">
+                      Penjelasan Bakat Kamu:
                     </p>
                     <div
-                      className="text-gray-700 mt-1"
+                      className="text-gray-700 mt-2 leading-relaxed"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(talentItem.full_description),
+                      }}
+                    />
+                  </div>
+
+                  {/* Rekomendasi Bakat */}
+                  <div className="mt-6">
+                    <p className="text-gray-800 font-semibold text-lg">
+                      Rekomendasi Bakat Kamu:
+                    </p>
+                    <div
+                      className="text-gray-700 mt-2 leading-relaxed"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(talentItem.recommendation),
                       }}
