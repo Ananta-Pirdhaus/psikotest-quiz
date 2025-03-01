@@ -6,6 +6,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams, useNavigate } from "react-router-dom";
 import PanduanCard from "./components/PanduanCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCheckCircle,
+  faTimesCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const BASE_URL = `${import.meta.env.VITE_BASE_URL}`;
 
@@ -60,6 +65,7 @@ export default function App() {
     parseInt(localStorage.getItem("checkpointPage")) || 1
   );
   const [isAnswered, setIsAnswered] = useState(false); // New state to track if question is answered
+  const [showModalConfirmation, setShowModalConfirmation] = useState(false);
 
   useEffect(() => {
     if (currentPage) {
@@ -217,12 +223,24 @@ export default function App() {
     const savedCheckpointPage = localStorage.getItem("checkpointPage");
     const savedQuizType = localStorage.getItem("quizType");
 
-    if (savedCheckpointPage === "1" && savedQuizType === "Single") {
-      setShowPanduan(true);
-    } else {
-      setShowPanduan(false);
+    if (savedCheckpointPage === "1") {
+      if (savedQuizType === "Single") {
+        setShowPanduan(true);
+      } else {
+        setShowPanduan(false);
+      }
+
+      if (savedQuizType === "Multiple") {
+        setShowModalConfirmation(true);
+      } else {
+        setShowModalConfirmation(false);
+      }
     }
   }, []);
+
+  const handleConfirmModal = () => {
+    setShowModalConfirmation(false);
+  };
 
   if (loading) {
     return (
@@ -263,26 +281,60 @@ export default function App() {
             </button>
           </div>
         ) : (
-          // If showPanduan is false, display the QuestionCard
-          <div className="p-3 max-w-3xl w-full bg-white rounded-lg shadow-md">
-            <QuestionCard
-              IdSession={sessionId}
-              quizLength={questions.length}
-              question={questions[currentQuestion]}
-              selectedAnswerID={selectedAnswerID}
-              currentQuestionNumber={currentQuestionNumber}
-              totalQuestions={pagination.total}
-              handleAnswerOptionClick={handleAnswerOptionClick}
-              handleNextQuestion={handleNextQuestion}
-              handlePrevQuestion={handlePrevQuestion}
-              handleScoreQuiz={handleScoreQuiz}
-              quizType={quizType}
-              handleChangeQuizType={handleChangeQuizType}
-              isLastQuestionAnswered={isLastQuestionAnswered}
-              currentPage={currentPage}
-              isAnswered={isAnswered} // Pass isAnswered to QuestionCard
-              handleCorrectAnswer={handleCorrectAnswer}
-            />
+          <div className="w-full flex flex-col items-center">
+            {/* Modal confirmation */}
+            {showModalConfirmation && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
+                <div className="p-5 max-w-3xl w-full bg-white rounded-lg shadow-md text-center">
+                  {/* Icon dan teks motivasi */}
+                  <div className="flex flex-col items-center">
+                    <FontAwesomeIcon
+                      icon={faCheckCircle}
+                      className="text-green-500 text-6xl"
+                    />
+                    <h2 className="text-2xl font-bold text-gray-800 mt-3">
+                      Semangat! Kamu Hampir Selesai! 🚀
+                    </h2>
+                    <p className="text-gray-600 mt-2">
+                      Kamu telah menyelesaikan soal tipe Single. Perjalananmu
+                      tinggal sedikit lagi! Mau lanjut ke tahap berikutnya?
+                    </p>
+                  </div>
+
+                  {/* Tombol aksi */}
+                  <div className="mt-5 flex gap-3 justify-center">
+                    <button
+                      onClick={handleConfirmModal}
+                      className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-all"
+                    >
+                      Lanjutkan 🔥
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Question Card */}
+            <div className="p-3 max-w-3xl w-full bg-white rounded-lg shadow-md">
+              <QuestionCard
+                IdSession={sessionId}
+                quizLength={questions.length}
+                question={questions[currentQuestion]}
+                selectedAnswerID={selectedAnswerID}
+                currentQuestionNumber={currentQuestionNumber}
+                totalQuestions={pagination.total}
+                handleAnswerOptionClick={handleAnswerOptionClick}
+                handleNextQuestion={handleNextQuestion}
+                handlePrevQuestion={handlePrevQuestion}
+                handleScoreQuiz={handleScoreQuiz}
+                quizType={quizType}
+                handleChangeQuizType={handleChangeQuizType}
+                isLastQuestionAnswered={isLastQuestionAnswered}
+                currentPage={currentPage}
+                isAnswered={isAnswered} // Pass isAnswered to QuestionCard
+                handleCorrectAnswer={handleCorrectAnswer}
+              />
+            </div>
           </div>
         )}
       </main>

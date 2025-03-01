@@ -138,7 +138,7 @@ const QuestionCard = ({
 
             {/* Question Indicator */}
             <h2 className="text-lg sm:text-xl font-bold leading-none text-gray-900 mt-3 sm:mt-4">
-              Question {currentPage} of {totalQuestions}
+              Nomor Pertanyaan {currentPage} / {totalQuestions}
             </h2>
           </div>
         </div>
@@ -188,8 +188,8 @@ const QuestionCard = ({
                   onClick={handleSwitchQuizType}
                   className="flex items-center gap-2 bg-blue-500 hover:bg-blue-600 transition-all duration-300 text-white font-medium rounded-md text-md px-5 py-2.5"
                 >
-                  <FontAwesomeIcon icon={faExchangeAlt} /> Switch to{" "}
-                  {quizType === "Single" ? "Multiple" : "Single"} Type
+                  <FontAwesomeIcon icon={faExchangeAlt} /> Ganti Soal Ke{" "}
+                  {quizType === "Single" ? "Multiple" : "Single"} Tipe
                 </button>
               ) : (
                 <button

@@ -98,7 +98,7 @@ const ResultQuizCard = ({ quizResult }) => {
           </p>
           <p className="flex items-center gap-3">
             <i className="fas fa-cogs text-amber-500"></i>
-            <span className="font-medium text-gray-900">Level:</span>
+            <span className="font-medium text-gray-900">Jenjang:</span>
             <span>{participant.level}</span>
           </p>
         </div>
@@ -172,11 +172,10 @@ const ResultQuizCard = ({ quizResult }) => {
               {expanded === index && (
                 <div className="p-4 bg-white rounded-lg shadow-sm border border-orange-200">
                   <p className="text-gray-800 font-medium">
-                    <strong>Deskripsi Singkat:</strong>{" "}
                     {talentItem.short_description}
                   </p>
                   <p className="text-gray-800 font-medium mt-3">
-                    <strong>Deskripsi Lengkap:</strong>
+                    <strong>Penjelasan Bakat Kamu:</strong>
                   </p>
                   <div
                     className="text-gray-700 mt-2"
@@ -186,7 +185,7 @@ const ResultQuizCard = ({ quizResult }) => {
                   />
                   <div className="mt-4">
                     <p className="text-gray-800 font-medium">
-                      <strong>Rekomendasi:</strong>
+                      <strong>Rekomendasi Bakat Kamu:</strong>
                     </p>
                     <div
                       className="text-gray-700 mt-1"
