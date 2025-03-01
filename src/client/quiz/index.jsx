@@ -186,10 +186,14 @@ export default function App() {
   };
 
   const handleChangeQuizType = () => {
-    if (pagination.current_page === pagination.last_page) {
-      // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
-      setCurrentPage(1); // Memulai dari halaman 1
-    }
+    setShowModalConfirmation(true); // Tampilkan modal terlebih dahulu
+  };
+
+  const handleConfirmModal = () => {
+    setShowModalConfirmation(false); // Tutup modal konfirmasi
+
+    // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
+    setCurrentPage(1); // Memulai dari halaman 1
 
     // Ganti tipe kuis
     setQuizType(quizType === "Single" ? "Multiple" : "Single");
@@ -237,10 +241,6 @@ export default function App() {
       }
     }
   }, []);
-
-  const handleConfirmModal = () => {
-    setShowModalConfirmation(false);
-  };
 
   if (loading) {
     return (
