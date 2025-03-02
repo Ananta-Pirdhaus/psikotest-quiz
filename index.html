@@ -1,9 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+
+    <!-- Fallback Metadata (Jika meta.json gagal dimuat) -->
+    <title>Career The Explorer</title>
+    <meta
+      name="description"
+      content="Platform untuk menemukan minat dan bakat terbaikmu!"
+    />
+    <meta
+      name="keywords"
+      content="career, explorer, platform, minat, bakat, jurusan kuliah"
+    />
+    <meta name="author" content="CTE Team" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/public/favicon.png" />
+
+    <!-- Load Metadata Dynamically -->
+    <script type="module" src="/src/metaLoader.js"></script>
   </head>
   <body>
     <div id="root"></div>
