@@ -183,6 +183,7 @@ const QuestionCard = ({
               </button>
 
               {/* Render button based on conditions */}
+              {/* Render button based on conditions */}
               {quizType === "Single" && isLastQuestionAnswered ? (
                 <button
                   onClick={handleSwitchQuizType}
@@ -194,7 +195,15 @@ const QuestionCard = ({
               ) : (
                 <button
                   onClick={handleNextQuestion}
-                  className="flex items-center gap-2 text-white bg-yellow-500 hover:bg-yellow-600 transition-all duration-300 font-medium rounded-md text-md px-5 py-2.5"
+                  className={`flex items-center gap-2 text-white font-medium rounded-md text-md px-5 py-2.5 transition-all duration-300
+      ${
+        quizType === "Multiple" && currentPage === totalQuestions
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-yellow-500 hover:bg-yellow-600"
+      }`}
+                  disabled={
+                    quizType === "Multiple" && currentPage === totalQuestions
+                  }
                 >
                   Selanjutnya <FontAwesomeIcon icon={faAnglesRight} />
                 </button>
@@ -216,12 +225,12 @@ const QuestionCard = ({
                     icon={faPaperPlane}
                     className="animate-spin"
                   />
-                  Submitting...
+                  Mengirim Jawaban...
                 </>
               ) : (
                 <>
                   <FontAwesomeIcon icon={faPaperPlane} />
-                  Submit All Answers
+                  Kirim Semua Jawaban
                 </>
               )}
             </button>
