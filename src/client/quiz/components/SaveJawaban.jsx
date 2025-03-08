@@ -29,10 +29,13 @@ const SaveJawaban = ({
           sendAnswerToServer(selectedAnswer); // Kirim jawaban jika sudah 3
           updateAnswerToServer(selectedAnswer); // Update jika jawaban sudah ada
         } else if (quizType === "multiple") {
-          toast.error("You must select exactly 3 answers for this question.", {
-            position: "top-right",
-            autoClose: 2500,
-          });
+          toast.error(
+            "Anda harus memilih tepat 3 jawaban untuk pertanyaan ini.",
+            {
+              position: "top-right",
+              autoClose: 2500,
+            }
+          );
         } else {
           sendAnswerToServer(selectedAnswer); // Untuk Single atau tipe lain, langsung kirim jawaban
         }
@@ -45,10 +48,13 @@ const SaveJawaban = ({
 
   const submitAllAnswers = async (idSession, answers) => {
     if (!idSession || !Array.isArray(answers) || answers.length === 0) {
-      toast.error("Invalid session or answers. Please check your data.", {
-        position: "top-center",
-        autoClose: 3000,
-      });
+      toast.error(
+        "Sesi atau jawaban tidak valid. Harap periksa kembali data Anda.",
+        {
+          position: "top-center",
+          autoClose: 3000,
+        }
+      );
       return;
     }
 
@@ -63,14 +69,14 @@ const SaveJawaban = ({
         bodyReq
       );
       if (response.data?.status === "error") {
-        toast.error(response.data?.message || "Submission failed!", {
+        toast.error(response.data?.message || "Pengiriman jawaban gagal!", {
           position: "top-center",
           autoClose: 3000,
         });
         return;
       }
 
-      toast.success("All answers submitted successfully!", {
+      toast.success("Semua jawaban berhasil dikirim!", {
         position: "top-center",
         autoClose: 3000,
       });
@@ -79,7 +85,7 @@ const SaveJawaban = ({
       localStorage.removeItem("checkpointPage");
       localStorage.removeItem("quizType");
     } catch (error) {
-      toast.error("Failed to submit answers. Please try again.", {
+      toast.error("Gagal mengirim jawaban. Silakan coba lagi.", {
         position: "top-center",
         autoClose: 3000,
       });
@@ -91,7 +97,7 @@ const SaveJawaban = ({
 
     // Untuk tipe "multiple", pastikan jawaban terdiri dari 3 pilihan
     if (quizType === "multiple" && options.length !== 3) {
-      toast.error("You must select exactly 3 answers for this question.", {
+      toast.error("Anda harus memilih tepat 3 jawaban untuk pertanyaan ini..", {
         position: "top-right",
         autoClose: 2500,
       });
@@ -109,7 +115,7 @@ const SaveJawaban = ({
     axios
       .post(`${BASE_URL}jawaban`, bodyReq)
       .then(() => {
-        toast.success("Answer submitted successfully!", {
+        toast.success("Jawaban berhasil dikirim!", {
           position: "top-right",
           autoClose: 2500,
         });
@@ -120,10 +126,13 @@ const SaveJawaban = ({
             "Pertanyaan yang dipilih tidak valid."
           )
         ) {
-          toast.error("Invalid question ID. Please check your data.", {
-            position: "top-right",
-            autoClose: 2500,
-          });
+          toast.error(
+            "ID pertanyaan tidak valid. Harap periksa kembali data Anda..",
+            {
+              position: "top-right",
+              autoClose: 2500,
+            }
+          );
         } else if (
           error.response?.data?.errors?.["answer.question"]?.includes(
             "Pertanyaan sudah ada sebelumnya."
@@ -146,7 +155,7 @@ const SaveJawaban = ({
     axios
       .put(`${BASE_URL}jawaban`, bodyReq)
       .then(() => {
-        toast.success("Answer updated successfully!", {
+        toast.success("Jawaban berhasil diperbarui!", {
           position: "top-right",
           autoClose: 2500,
         });
@@ -161,7 +170,7 @@ const SaveJawaban = ({
 
   const validateData = (options, IdSession, questionId) => {
     if (!IdSession || typeof IdSession !== "string") {
-      toast.error("Invalid session ID.", {
+      toast.error("ID sesi tidak valid.", {
         position: "top-right",
         autoClose: 2500,
       });
@@ -169,7 +178,7 @@ const SaveJawaban = ({
     }
 
     if (!questionId || typeof questionId !== "string") {
-      toast.error("Invalid question ID.", {
+      toast.error("ID pertanyaan tidak valid.", {
         position: "top-right",
         autoClose: 2500,
       });
@@ -177,7 +186,7 @@ const SaveJawaban = ({
     }
 
     if (!options || !Array.isArray(options) || options.length === 0) {
-      toast.error("Invalid options selected.", {
+      toast.error("Pilihan jawaban tidak valid.", {
         position: "top-right",
         autoClose: 2500,
       });
