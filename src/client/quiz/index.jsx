@@ -227,19 +227,10 @@ export default function App() {
     const savedCheckpointPage = localStorage.getItem("checkpointPage");
     const savedQuizType = localStorage.getItem("quizType");
 
-    if (savedCheckpointPage === "1") {
-      if (savedQuizType === "Single") {
-        setShowPanduan(true);
-      } else {
-        setShowPanduan(false);
-      }
-
-      if (savedQuizType === "Multiple") {
-        setShowModalConfirmation(true);
-      } else {
-        setShowModalConfirmation(false);
-      }
-    }
+    setShowPanduan(savedCheckpointPage === "1" && savedQuizType === "Single");
+    setShowModalConfirmation(
+      savedCheckpointPage === "1" && savedQuizType === "Multiple"
+    );
   }, []);
 
   if (loading) {
@@ -282,11 +273,9 @@ export default function App() {
           </div>
         ) : (
           <div className="w-full flex flex-col items-center">
-            {/* Modal confirmation */}
             {showModalConfirmation && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
                 <div className="p-5 max-w-3xl w-full bg-white rounded-lg shadow-md text-center">
-                  {/* Icon dan teks motivasi */}
                   <div className="flex flex-col items-center">
                     <FontAwesomeIcon
                       icon={faCheckCircle}
