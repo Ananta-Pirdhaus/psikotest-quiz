@@ -192,12 +192,6 @@ export default function App() {
   const handleConfirmModal = () => {
     setShowModalConfirmation(false); // Tutup modal konfirmasi
 
-    // Jika berada di halaman terakhir untuk tipe yang aktif, setel checkpointPage ke 1
-    setCurrentPage(1); // Memulai dari halaman 1
-
-    // Ganti tipe kuis
-    setQuizType(quizType === "Single" ? "Multiple" : "Single");
-
     // Reset pagination dan soal
     setPagination({
       current_page: 1,
@@ -205,8 +199,12 @@ export default function App() {
       per_page: 1,
       total: 1,
     });
+    setCurrentPage(1); // Memulai dari halaman 1
     setCurrentQuestion(0); // Reset ke soal pertama
     setSelectedAnswerID(null); // Hapus jawaban yang terpilih
+
+    // Ganti tipe kuis menggunakan fungsi callback agar state terbaru digunakan
+    setQuizType((prevType) => (prevType === "Single" ? "Multiple" : "Single"));
   };
 
   // Fetch panduan data
@@ -273,9 +271,11 @@ export default function App() {
           </div>
         ) : (
           <div className="w-full flex flex-col items-center">
+            {/* Modal confirmation */}
             {showModalConfirmation && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
                 <div className="p-5 max-w-3xl w-full bg-white rounded-lg shadow-md text-center">
+                  {/* Icon dan teks motivasi */}
                   <div className="flex flex-col items-center">
                     <FontAwesomeIcon
                       icon={faCheckCircle}
