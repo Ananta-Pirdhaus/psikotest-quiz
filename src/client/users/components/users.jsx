@@ -194,7 +194,7 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
                 />
 
                 {/* Jurusan Select */}
-                <Select
+                {/* <Select
                   className="mt-5"
                   options={jurusanOptions}
                   styles={customStyles}
@@ -203,10 +203,10 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
                     setFormData({ ...formData, major: selected.value });
                     setSelectedMajor(selected); // Set jurusan yang dipilih
                   }}
-                />
+                /> */}
 
                 {/* Perguruan Tinggi Select */}
-                <Select
+                {/* <Select
                   className="mt-5"
                   options={perguruanTinggiOptions}
                   styles={customStyles}
@@ -217,7 +217,7 @@ function UserPeserta({ jurusan, perguruanTinggi, sekolah, kelas }) {
                       university: selected.value,
                     })
                   }
-                />
+                /> */}
 
                 {/* Sign Up Button */}
                 <button

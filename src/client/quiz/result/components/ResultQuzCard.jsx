@@ -243,46 +243,56 @@ const ResultQuizCard = ({ quizResult }) => {
           </div>
         ))}
 
-        <h3 className="text-2xl font-bold text-orange-600 flex items-center gap-2 mt-8 mb-6">
-          <i className="fas fa-school text-2xl text-yellow-500"></i> Jurusan
-          yang Cocok untuk Kamu
-        </h3>
-        {major.map((item, index) => (
-          <div
-            key={index}
-            className="p-5 mb-5 bg-orange-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-          >
-            <div className="flex justify-between items-center">
-              <h4 className="text-orange-700 text-xl font-semibold flex items-center gap-2">
-                <i className="fas fa-graduation-cap"></i> {item.name}
-              </h4>
-              <button
-                onClick={() => toggleExpand(`major-${index}`)}
-                className="text-orange-700 font-medium transition duration-300 flex items-center gap-1 hover:text-orange-500"
-              >
-                {expanded === `major-${index}` ? (
-                  <i className="fas fa-minus-circle"></i>
-                ) : (
-                  <i className="fas fa-plus-circle"></i>
-                )}
-              </button>
-            </div>
+        {major.map((item, index) => {
+          // Memastikan UNESA selalu di depan
+          const sortedUniversities = [...item.universities];
+          const unesaIndex = sortedUniversities.findIndex((uni) =>
+            uni.includes("Universitas Negeri Surabaya (UNESA)")
+          );
 
+          if (unesaIndex > 0) {
+            // Jika UNESA ditemukan dan bukan di posisi pertama, pindahkan ke depan
+            const [unesa] = sortedUniversities.splice(unesaIndex, 1);
+            sortedUniversities.unshift(unesa);
+          }
+
+          return (
             <div
-              className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${
-                expanded === `major-${index}`
-                  ? "max-h-[600px] opacity-100"
-                  : "max-h-0 opacity-0"
-              }`}
+              key={index}
+              className="p-5 mb-5 bg-orange-50 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
             >
-              {expanded === `major-${index}` && (
-                <p className="text-gray-800 p-4 bg-white rounded-lg shadow-sm border border-orange-200 font-medium">
-                  {item.universities.slice(0, 5).join(", ")}
-                </p>
-              )}
+              <div className="flex justify-between items-center">
+                <h4 className="text-orange-700 text-xl font-semibold flex items-center gap-2">
+                  <i className="fas fa-graduation-cap"></i> {item.name}
+                </h4>
+                <button
+                  onClick={() => toggleExpand(`major-${index}`)}
+                  className="text-orange-700 font-medium transition duration-300 flex items-center gap-1 hover:text-orange-500"
+                >
+                  {expanded === `major-${index}` ? (
+                    <i className="fas fa-minus-circle"></i>
+                  ) : (
+                    <i className="fas fa-plus-circle"></i>
+                  )}
+                </button>
+              </div>
+
+              <div
+                className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${
+                  expanded === `major-${index}`
+                    ? "max-h-[600px] opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                {expanded === `major-${index}` && (
+                  <p className="text-gray-800 p-4 bg-white rounded-lg shadow-sm border border-orange-200 font-medium">
+                    {sortedUniversities.slice(0, 5).join(", ")}
+                  </p>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

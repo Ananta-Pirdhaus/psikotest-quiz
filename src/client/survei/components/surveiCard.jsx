@@ -107,8 +107,8 @@ export default function SurveiCard({ questions, sessionId, baseUrl }) {
                         className={`w-full h-13 p-2 rounded-lg text-white font-semibold transition-all duration-200 transform 
                         ${
                           answers[question.id].selectedAnswer === option
-                            ? "bg-amber-600 shadow-md scale-105"
-                            : "bg-amber-500 hover:bg-amber-700 hover:scale-105"
+                            ? "bg-amber-800 shadow-md scale-105"
+                            : "bg-amber-500 hover:bg-amber-600 hover:scale-105"
                         }
                       `}
                         onClick={() =>

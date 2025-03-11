@@ -80,15 +80,15 @@ export default function Banner() {
                   </div>
                 </div>
                 <div className="game-card-bottom mt-4 text-center">
-                  <h4 className="text-amber-800 text-lg font-semibold">
+                  <h4 className="text-amber-900 text-lg font-semibold">
                     {info.title}
                   </h4>
                   <p className="text-amber-900 text-sm mt-2">
                     {info.description}
                   </p>
                   <div className="mt-3">
-                    <p className="font-semibold text-amber-700">Manfaat:</p>
-                    <ul className="text-amber-600 list-disc pl-4 text-sm">
+                    <p className="font-semibold text-amber-800">Manfaat:</p>
+                    <ul className="text-amber-800 list-disc pl-4 text-sm">
                       {info.features.map((feature, index) => (
                         <li key={index}>{feature}</li>
                       ))}
