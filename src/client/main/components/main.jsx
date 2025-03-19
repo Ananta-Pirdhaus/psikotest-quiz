@@ -13,7 +13,7 @@ export default function Banner() {
       <section className="py-16 bg-gradient-to-b from-amber-100 to-amber-500">
         <div className="container mx-auto px-6">
           <div className="join-title text-center py-5 text-amber-800">
-            <h1 className="font-bold">
+            <h1 className="font-bold text-2xl">
               Pentingnya <span className="text-amber-600">Psikotes</span>
             </h1>
             <div className="line bg-amber-400 w-24 h-1 mx-auto mt-2"></div>
@@ -67,7 +67,7 @@ export default function Banner() {
               },
             ].map((info) => (
               <div
-                className="game-card rounded-lg bg-amber-100 shadow-lg p-6 transform transition duration-300 hover:scale-105"
+                className="game-card rounded-lg bg-amber-100 shadow-lg p-6 transform transition duration-300 hover:scale-105 hover:bg-amber-200"
                 key={info.id}
               >
                 <div className="flex justify-center">
@@ -88,9 +88,9 @@ export default function Banner() {
                   </p>
                   <div className="mt-3">
                     <p className="font-semibold text-amber-800">Manfaat:</p>
-                    <ul className="text-amber-800 list-disc pl-4 text-sm">
+                    <ul className="text-amber-800 list-none gap-y-2 flex flex-col items-center text-sm">
                       {info.features.map((feature, index) => (
-                        <li key={index}>{feature}</li>
+                        <li key={index}>✅ {feature}</li>
                       ))}
                     </ul>
                   </div>

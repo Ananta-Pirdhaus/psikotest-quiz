@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import LogoUnesa from "../common/logo-unesa.png";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import LogoLarge from "../assets/logo_large.png";
+import logoUnesa from "../common/logo-unesa.png";
 import Logo from "../assets/logo.png";
+import MainSvg from "../assets/main_svg.svg";
 
 export default function Header() {
   const [isNavbarVisible, setNavbarVisible] = useState(false);
@@ -36,8 +37,13 @@ export default function Header() {
       >
         <a
           href="#"
-          className="text-2xl font-bold uppercase tracking-tight text-gray-900"
+          className="text-2xl font-bold uppercase tracking-tight text-gray-900 flex items-center gap-4"
         >
+          <img
+            src={logoUnesa}
+            alt="Unesa Logo"
+            className="hidden lg:inline h-20"
+          />
           <img
             src={LogoLarge}
             alt="Career The Explorer Logo"
@@ -77,7 +83,7 @@ export default function Header() {
                 </li>
                 <li>
                   <a href="#features" className="hover:text-orange-500">
-                    Tentang Psikotest
+                    Tentang Tes Bakat
                   </a>
                 </li>
                 <li>
@@ -103,7 +109,7 @@ export default function Header() {
           </li>
           <li>
             <a href="#features" className="hover:text-orange-500">
-              Tentang Psikotest
+              Tentang Tes Bakat
             </a>
           </li>
           <li>
@@ -173,7 +179,7 @@ export default function Header() {
             <img
               className="object-cover object-center rounded"
               alt="hero"
-              src={LogoUnesa}
+              src={MainSvg}
             />
           </motion.div>
         </div>

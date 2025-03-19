@@ -73,7 +73,7 @@ const ResultQuizCard = ({ quizResult }) => {
   return (
     <div className="max-w-5xl mx-auto p-8 bg-white shadow-lg rounded-3xl border border-gray-300">
       <h2 className="text-4xl font-extrabold text-gray-800 mb-8 text-center">
-        📊 Hasil Kuis
+        📊 Hasil Test
       </h2>
 
       <div className="mb-6 p-6 bg-white rounded-2xl shadow-xl border border-gray-200 transition-transform transform hover:scale-[1.02] hover:shadow-2xl w-full">
@@ -242,6 +242,11 @@ const ResultQuizCard = ({ quizResult }) => {
             </h4>
           </div>
         ))}
+
+        <h3 className="text-2xl font-bold text-orange-600 flex items-center gap-2 mt-8 mb-6">
+          <i className="fas fa-school text-2xl text-yellow-500"></i> Jurusan
+          yang Cocok untuk Kamu
+        </h3>
 
         {major.map((item, index) => {
           // Memastikan UNESA selalu di depan

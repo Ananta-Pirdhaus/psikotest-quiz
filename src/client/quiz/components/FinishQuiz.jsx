@@ -66,14 +66,14 @@ const ThankYouCard = () => {
               Anda telah berhasil menyelesaikan survei dan melaksanakan
               <span className="font-semibold">
                 {" "}
-                "Quiz the Explorer" Psikotest
+                "Quiz the Explorer" Test Bakat
               </span>
               . Semoga pengalaman ini memberikan wawasan baru bagi Anda.
             </p>
 
             {/* Pesan tambahan tentang email survei */}
             <p className="text-red-500 font-medium mb-6">
-              📩 Link untuk survei dan hasil quiz telah dikirim ke email Anda.
+              📩 Link untuk survei dan hasil test telah dikirim ke email Anda.
               Jangan lupa untuk mengisi survei terlebih dahulu sebelum melihat
               hasilnya! 😊
             </p>

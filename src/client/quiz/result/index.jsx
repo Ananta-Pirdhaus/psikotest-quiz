@@ -30,7 +30,7 @@ export default function ResultQuizApp() {
       try {
         const fetchedResult = await fetchResultQuizData(idSession);
         if (!fetchedResult) {
-          toast.error("Tidak ada data hasil kuis yang tersedia.");
+          toast.error("Tidak ada data hasil test yang tersedia.");
           setTimeout(() => {
             navigate(`/survei/${idSession}`); // Redirect ke halaman survey
           }, 2000); // Delay 2 detik agar user melihat pesan error
@@ -38,7 +38,7 @@ export default function ResultQuizApp() {
           setQuizResult(fetchedResult);
         }
       } catch (error) {
-        toast.error("Gagal memuat data hasil kuis.");
+        toast.error("Gagal memuat data hasil test.");
         setTimeout(() => {
           navigate(`/survei/${idSession}`);
         }, 2000);
