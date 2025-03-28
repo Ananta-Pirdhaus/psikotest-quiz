@@ -87,8 +87,8 @@ export default function Header() {
                   </a>
                 </li>
                 <li>
-                  <a href="#visi-misi" className="hover:text-orange-500">
-                    Visi & Misi
+                  <a href="#informasi-bakat" className="hover:text-orange-500">
+                    Informasi Bakat
                   </a>
                 </li>
                 <li>
@@ -113,8 +113,8 @@ export default function Header() {
             </a>
           </li>
           <li>
-            <a href="#visi-misi" className="hover:text-orange-500">
-              Visi & Misi
+            <a href="#informasi-bakat" className="hover:text-orange-500">
+              Informasi Bakat
             </a>
           </li>
           <li>

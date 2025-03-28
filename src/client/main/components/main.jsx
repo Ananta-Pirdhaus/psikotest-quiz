@@ -13,7 +13,7 @@ export default function Banner() {
       <section className="py-16 bg-gradient-to-b from-amber-100 to-amber-500">
         <div className="container mx-auto px-6">
           <div className="join-title text-center py-5 text-amber-800">
-            <h1 className="font-bold text-2xl">
+            <h1 className="font-bold text-3xl">
               Pentingnya <span className="text-amber-600">Psikotes</span>
             </h1>
             <div className="line bg-amber-400 w-24 h-1 mx-auto mt-2"></div>

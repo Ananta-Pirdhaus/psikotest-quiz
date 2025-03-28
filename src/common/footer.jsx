@@ -41,7 +41,7 @@ export default function Footer() {
             />
           </a>
           <p className="text-gray-600">
-            Platform layanan tes psikotes online interaktif untuk membantu
+            Platform layanan tes minat bakat online interaktif untuk membantu
             mengetahui dan memahami potensi, bakat, minat, serta keahlian
             penting dalam pengembangan karir profesional.
           </p>
