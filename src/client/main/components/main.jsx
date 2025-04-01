@@ -14,7 +14,7 @@ export default function Banner() {
         <div className="container mx-auto px-6">
           <div className="join-title text-center py-5 text-amber-800">
             <h1 className="font-bold text-3xl">
-              Pentingnya <span className="text-amber-600">Psikotes</span>
+              Pentingnya <span className="text-amber-600">Tes Bakat</span>
             </h1>
             <div className="line bg-amber-400 w-24 h-1 mx-auto mt-2"></div>
           </div>
@@ -25,7 +25,7 @@ export default function Banner() {
                 id: 1,
                 title: "Mengukur Kecerdasan",
                 description:
-                  "Psikotes membantu menilai kemampuan intelektual seseorang, seperti pemecahan masalah, logika, dan daya ingat.",
+                  "Tes Bakat membantu menilai kemampuan intelektual seseorang, seperti pemecahan masalah, logika, dan daya ingat.",
                 features: ["Problem-solving", "Logical reasoning", "Memory"],
                 icon: faBrain,
               },
@@ -45,7 +45,7 @@ export default function Banner() {
                 id: 3,
                 title: "Menentukan Potensi Karier",
                 description:
-                  "Psikotes dapat membantu menentukan jalur karier yang sesuai berdasarkan kemampuan dan minat seseorang.",
+                  "Tes Bakat dapat membantu menentukan jalur karier yang sesuai berdasarkan kemampuan dan minat seseorang.",
                 features: [
                   "Analisis minat",
                   "Kecocokan pekerjaan",

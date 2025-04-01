@@ -45,7 +45,7 @@ export default function BakatGrid() {
             {bakat.map((item) => (
               <div
                 key={item.id}
-                className="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg border border-transparent"
+                className="relative group cursor-pointer overflow-hidden rounded-xl shadow-xl border-b-4 border-t-8  border-amber-600"
                 onClick={() => setSelectedBakat(item)}
               >
                 <img
