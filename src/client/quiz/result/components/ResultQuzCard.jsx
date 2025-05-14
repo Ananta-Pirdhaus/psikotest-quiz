@@ -283,16 +283,34 @@ const ResultQuizCard = ({ quizResult }) => {
               </div>
 
               <div
-                className={`mt-4 transition-all duration-500 ease-in-out overflow-hidden ${
+                className={`mt-4 transition-all duration-500 ease-in-out overflow-auto ${
                   expanded === `major-${index}`
                     ? "max-h-[600px] opacity-100"
                     : "max-h-0 opacity-0"
                 }`}
               >
                 {expanded === `major-${index}` && (
-                  <p className="text-gray-800 p-4 bg-white rounded-lg shadow-sm border border-orange-200 font-medium">
-                    {sortedUniversities.slice(0, 5).join(", ")}
-                  </p>
+                  <table className="text-gray-800 w-full bg-white rounded-lg shadow-sm border border-orange-200 font-medium">
+                    <tbody>
+                      {/* Bagi array universitas menjadi tiga bagian */}
+                      {Array.from(
+                        { length: Math.ceil(sortedUniversities.length / 3) },
+                        (_, i) => (
+                          <tr key={i}>
+                            <td className="py-2 px-4 border-b whitespace-nowrap">
+                              {sortedUniversities[i * 3]}
+                            </td>
+                            <td className="py-2 px-4 border-b whitespace-nowrap">
+                              {sortedUniversities[i * 3 + 1]}
+                            </td>
+                            <td className="py-2 px-4 border-b whitespace-nowrap">
+                              {sortedUniversities[i * 3 + 2]}
+                            </td>
+                          </tr>
+                        )
+                      )}
+                    </tbody>
+                  </table>
                 )}
               </div>
             </div>
